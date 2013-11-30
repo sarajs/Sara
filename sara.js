@@ -4,12 +4,12 @@
  *
  */
 
-Function.prototype.method = function (name, method) {
-  if (method) {
-    this.prototype[name] = method
+Function.prototype.method = function (object) {
+  if (object instanceof Function) {
+    this.prototype[object.name] = object
     return this
   }
-  return this.prototype[name]
+  return this.prototype[object]
 }
 
 Array.prototype.each = function(iterator, context) {
@@ -45,10 +45,14 @@ String.prototype.trimExtension = function () {
  */
 
 function Sara(options) {
+  // Singleton goodness
+  if (arguments.callee._instance) return arguments.callee._instance
+  arguments.callee._instance = this
+
   var Local = typeof process === 'undefined' ? Sara.Client : Sara.Server
 
   // Defaults
-  this.data = {}
+  this.cache = {}
   this.templating = null
   this.websockets = null
   this.layout = 'layout.html'
@@ -101,30 +105,27 @@ Sara.Server = function Server(app) {
     var Resource = app.resources[name]
       , partials = fs.readdirSync(app.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
     
-    for (var i = partials.length; i--;) {
-      console.log(partials[i].trimExtension().substr(1))
-      Handlebars.registerPartial(partials[i].trimExtension().substr(1), fs.readFileSync(app.root + '/views/' + name + 's/' + partials[i]).toString())
-    }
+    for (var i = partials.length; i--;) Handlebars.registerPartial(partials[i].trimExtension().substr(1), fs.readFileSync(app.root + '/views/' + name + 's/' + partials[i]).toString())
     
     app.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
-    app.routes['/' + name + 's/' + ':id'] = { context: Resource.find, template: name + 's/show.html' } // READ
-    app.routes['/' + name + 's'] = { context: Resource.all, tempalte: name + 's/index.html' } // READ
-    app.routes['/' + name + 's/' + ':id/' + 'edit'] = { context: Resource.find, template: name + 's/edit.html' } // UPDATE
-    app.routes['/' + name + 's/' + ':id/' + 'delete'] = { context: Resource.find, template: name + 's/delete.html' } // DELETE
+    app.routes['/' + name + 's/' + ':id'] = { resource: Resource, action: 'find', template: name + 's/show.html' } // READ
+    app.routes['/' + name + 's'] = { resource: Resource, action: 'all', tempalte: name + 's/index.html' } // READ
+    app.routes['/' + name + 's/' + ':id/' + 'edit'] = { resource: Resource, action: 'find', template: name + 's/edit.html' } // UPDATE
+    app.routes['/' + name + 's/' + ':id/' + 'delete'] = { resource: Resource, action: 'find', template: name + 's/delete.html' } // DELETE
   }
   
   // Load the layout tempalte
   layout = fs.readFileSync(app.root + '/views/' + app.layout).toString()
 
   server = http.createServer(function (req, res) {
-    // Try the route
-    resource = app.routes[req.url]
-    if (resource) {
-      context = resource.context ? resource.context() : {}
-      template = fs.readFileSync(app.root + '/views/' + resource.template).toString()
+    routeObject = app.routes[req.url] || matchRoute()
+    
+    if (routeObject) {
+      context = routeObject.resource ? routeObject.resource[routeObject.action](routeObject.variables) : {}
+      template = fs.readFileSync(app.root + '/views/' + routeObject.template).toString()
       
       // Load the presenter
-      if (resource.context) yield = Handlebars.compile(template)(context)
+      yield = Handlebars.compile(template)(context)
       
       // Add the script
       yield += '\n<script src="/index.js"></script>'
@@ -147,6 +148,24 @@ Sara.Server = function Server(app) {
     res.writeHead(404, { "Content-Type": "text/plain" })
     res.write("404 Not found")
     res.end()
+    
+    function matchRoute() {
+      for (var route in app.routes) {
+        var match = req.url.match(new RegExp(route.replace(/:[^\s\/]+/g, '(.+)')))
+        if (match && req.url === match[0]) {
+          return {
+            resource: app.routes[route].resource
+          , action: app.routes[route].action
+          , template: app.routes[route].template
+          , variables: {
+              id: match[1]
+            }
+          }
+        }
+      }
+      
+      return false
+    }
   })
   
   server.listen(app.port)
@@ -160,11 +179,16 @@ Sara.Server = function Server(app) {
  */
 
 Sara.Resource = function Resource(object) {
-  
 }
 
 Sara.Resource.all = function all() {
+  console.log(this)
   return { posts: [{ id: 1, title: 'foo', content: 'wat' }, { id: 2, title: 'bar', content: 'wut' }] }
+}
+
+Sara.Resource.find = function find(id) {
+  console.log(this)
+  return { id: 1, title: 'foo', content: 'wat' }
 }
 
 /*!
@@ -182,7 +206,7 @@ Sara.Resource.all = function all() {
 Sara.Presenter = function Presenter(object) {
   extend(this, object)
 }
-Sara.Presenter.extend = Sara.Resource.extend = function extend(object) {
+Sara.extend = Sara.Presenter.extend = Sara.Resource.extend = function extend(object) {
   for (var prop in object) {
     this[prop] = object[prop]
   }

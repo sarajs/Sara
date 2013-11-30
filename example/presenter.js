@@ -1,5 +1,5 @@
 var Application = require('../../sara')
 
-module.exports = Application.Presenter.extend({
+module.exports = new Application.Presenter({
   
 })

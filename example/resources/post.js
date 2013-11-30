@@ -1,7 +1,9 @@
 var Application = require('../../sara')
+  , app = require('../app')
 
 module.exports = Application.Resource.extend({
   name: 'post'
+, app: app
 , attributes: {
     title: String
   , author: String
