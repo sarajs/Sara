@@ -1,21 +1,19 @@
 module.exports = function (grunt) {
   grunt.initConfig({
-    jasmine: {
-      test: {
-        src: 'sara.js'
-      , options: {
-          specs: 'test/*-test.js'
-        , helpers: 'test/*-helper.js'
-        }
+    develop: {
+      server: {
+        file: 'example/app.js'
       }
     }
   
-  , copy: {
-      files: []
+  , jasmine: {
+      test: {
+        urls: [ 'http://localhost:1337' ]
+      }
     }
   
   , uglify: {
-      index: {
+      sara: {
         files: { 'sara.min.js': ['sara.js'] }
       , options: { mangle: true }
       }
@@ -23,8 +21,12 @@ module.exports = function (grunt) {
   })
   
   grunt.loadNpmTasks('grunt-contrib-uglify')
-  grunt.loadNpmTasks('grunt-contrib-copy')
+  grunt.loadNpmTasks('grunt-develop')
   grunt.loadNpmTasks('grunt-contrib-jasmine')
   
-  grunt.registerTask('default', ['jasmine', 'copy', 'uglify'])
+  grunt.registerTask('test', ['develop', 'mocha'])
+  
+  grunt.registerTask('make', ['test', 'uglify'])
+  
+  grunt.registerTask('default', ['make'])
 }

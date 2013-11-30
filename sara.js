@@ -1,72 +1,123 @@
-!function (name, root, factory) {
-  if (typeof define === 'function' && define.amd) define([], factory)
-  else if (typeof exports === 'object') module.exports = factory()
-  else root[name] = factory()
-}('Sara', this, function () {
-  /*!
-   *
-   * UTILITIES
-   *
-   */
+/*!
+ *
+ * UTILITIES
+ *
+ */
 
-  Function.prototype.method = function (name, method) {
-    if (method) {
-      this.prototype[name] = method
-      return this
-    }
-    
-    return this.prototype[name]
+Function.prototype.method = function (name, method) {
+  if (method) {
+    this.prototype[name] = method
+    return this
+  }
+  return this.prototype[name]
+}
+
+Object.prototype.extend = function (object) {
+  for (var prop in object) {
+    this[prop] = object[prop]
+  }
+  return this
+}
+
+/*!
+ *
+ * SARA
+ *
+ */
+
+function Sara(options) {
+  var that = this
+    , http = require('http')
+    , fs = require('fs')
+    , path = require('path')
+    , layout
+    , port
+    , server
+    , yield
+    , route
+
+  // Defaults
+  this.root = path.dirname(module.parent.filename)
+  this.data = {}
+  this.env = process.env.NODE_ENV || 'development'
+  this.templates = null
+  this.websockets = null
+  this.layout = 'layout.html'
+  
+  // Load options
+  this.extend(options)
+  
+  // Load the layout tempalte
+  layout = fs.readFileSync(this.root + '/templates/' + this.layout).toString()
+  
+  // Port 80 in production
+  if (this.env === 'production') port = 80
+  else {
+    port = 1337
+    process.app = this
   }
   
-  /*!
-   *
-   * SARA
-   *
-   */
-  
-  function Sara() {
+  // Server
+  server = http.createServer(function (req, res) {
+    route = that.routes[req.url]
     
-  }
+    if (route) { // If the route exists
+      // Load the presenter
+      if (route instanceof Function) yield = new route()
+      else yield = route
+      
+      // Add the script
+      yield += '\n<script src="/index.js"></script>'
+      
+      // {{{}}} shortcut
+      yield = new that.templates.SafeString(yield)
+    } else yield = '404 not found' // Or 404
   
-  /*!
-   *
-   * RESOURCE
-   *
-   */
-  
-  Sara.method('Resource', function (object) {
-    
+    res.end(that.templates.compile(layout)({ yield: yield }))
   })
   
-  /*!
-   *
-   * VIEW
-   *
-   */
+  server.listen(port)
+  console.log('Sara is waiting for you on port ' + port + '.')
+}
+
+/*!
+ *
+ * CLIENT
+ *
+ */
+
+Sara.Client = function Client(object) {
   
-  Sara.method('View', function (object) {
-    
-  })
+}
+
+/*!
+ *
+ * RESOURCE
+ *
+ */
+
+Sara.Resource = function Resource(object) {
   
-  /*!
-   *
-   * PRESENTER
-   *
-   */
+}
+
+/*!
+ *
+ * VIEW
+ *
+ */
+
+Sara.View = function View(object) {
   
-  Sara.method('Presenter', function (object) {
-    
-  })
+}
+
+/*!
+ *
+ * PRESENTER
+ *
+ */
+
+Sara.Presenter = function Presenter() {
   
-  /*!
-   *
-   * ROUTER
-   *
-   */
-  
-  Sara.method('Router', function (object) {
-    
-  })
-  
-  return Sara
-})
+}
+
+module.exports = Sara
