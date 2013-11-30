@@ -1,10 +1,14 @@
-var Application = require('../sara')
-  , Handlebars = require('handlebars')
+var Application = require('../sara.js')
+  , Presenter = require('./presenter')
+  , Post = require('./resources/post')
 
-module.exports = new Application({
-  env: 'testing'
-, templates: Handlebars
+module.exports = app = new Application({
+  templating: 'handlebars'
+, presenter: new Presenter()
+, resources: {
+    'post': Post
+  }
 , routes: {
-    '/': require('./presenters/index')
+    '/': { context: Post.all, template: 'posts/index.html' }
   }
 })

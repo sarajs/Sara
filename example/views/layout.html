@@ -6,6 +6,15 @@
   <link href="/index.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-  {{yield}}
+  <header>
+    <h1>Sara Example</h1>
+    <nav>
+      <a href="/">posts</a>
+      <a href="/posts/new">new post</a>
+    </nav>
+  </header>
+  <main>
+    {{yield}}
+  </main>
 </body>
 </html>

@@ -1,7 +1,7 @@
 {
   "name": "sara",
   "version": "0.0.1",
-  "main": "./sara.min.js",
+  "main": "./sara.js",
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.2.7",

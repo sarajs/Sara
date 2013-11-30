@@ -12,11 +12,30 @@ Function.prototype.method = function (name, method) {
   return this.prototype[name]
 }
 
-Object.prototype.extend = function (object) {
-  for (var prop in object) {
-    this[prop] = object[prop]
+Array.prototype.each = function(iterator, context) {
+  for (var i = 0, length = this.length; i < length; i++) {
+    if (iterator.call(context, this[i], i, this) === {}) return
   }
-  return this
+}
+
+Array.prototype.filter = function(iterator, context) {
+  var results = []
+  if (this == null) return results
+  this.each(function(value, index, list) {
+    if (iterator.call(context, value, index, list)) results.push(value)
+  })
+  return results
+}
+
+function extend(target, object) {
+  for (var prop in object) {
+    target[prop] = object[prop]
+  }
+  return target
+}
+
+String.prototype.trimExtension = function () {
+  return this.replace(/\.[^/.]+$/, '')
 }
 
 /*!
@@ -26,25 +45,18 @@ Object.prototype.extend = function (object) {
  */
 
 function Sara(options) {
-  var Local = process ? Sara.Server : Sara.Client
+  var Local = typeof process === 'undefined' ? Sara.Client : Sara.Server
 
   // Defaults
   this.data = {}
-  this.env = process.env.NODE_ENV || 'development'
-  this.templates = null
+  this.templating = null
   this.websockets = null
   this.layout = 'layout.html'
   this.resources = {}
   this.routes = {}
-  this.port = process.env.PORT || 80
   
   // Load options
-  this.extend(options)
-  
-  
-  
-  // Port 80 in production
-  if (this.env !== 'production') this.port = 1337
+  extend(this, options)
   
   // Server
   new Local(this)
@@ -72,45 +84,65 @@ Sara.Server = function Server(app) {
   var http = require('http')
     , fs = require('fs')
     , path = require('path')
+    , Handlebars = require('handlebars')
     , layout
-    , Presenter
+    , presenter
     , asset
     , yield
     , server
+    , context
   
+  app.layout
+  app.port = process.env.PORT || 1337
   app.root = path.dirname(module.parent.filename)
   
-  // Load resources
-  var resourceConstructors = fs.readdirSync(app.root + '/resources')
-    , i = resourceConstructors.length
-  while (resourceConstructors--) {
-    console.log(resourceConstructors[i])
+  // Create CRUD routes for resources
+  for (var name in app.resources) {
+    var Resource = app.resources[name]
+      , partials = fs.readdirSync(app.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
+    
+    for (var i = partials.length; i--;) {
+      console.log(partials[i].trimExtension().substr(1))
+      Handlebars.registerPartial(partials[i].trimExtension().substr(1), fs.readFileSync(app.root + '/views/' + name + 's/' + partials[i]).toString())
+    }
+    
+    app.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
+    app.routes['/' + name + 's/' + ':id'] = { context: Resource.find, template: name + 's/show.html' } // READ
+    app.routes['/' + name + 's'] = { context: Resource.all, tempalte: name + 's/index.html' } // READ
+    app.routes['/' + name + 's/' + ':id/' + 'edit'] = { context: Resource.find, template: name + 's/edit.html' } // UPDATE
+    app.routes['/' + name + 's/' + ':id/' + 'delete'] = { context: Resource.find, template: name + 's/delete.html' } // DELETE
   }
   
   // Load the layout tempalte
-  layout = fs.readFileSync(app.root + '/templates/' + app.layout).toString()
+  layout = fs.readFileSync(app.root + '/views/' + app.layout).toString()
 
   server = http.createServer(function (req, res) {
-    Presenter = app.routes[req.url]
+    // Try the route
+    resource = app.routes[req.url]
+    if (resource) {
+      context = resource.context ? resource.context() : {}
+      template = fs.readFileSync(app.root + '/views/' + resource.template).toString()
+      
+      // Load the presenter
+      if (resource.context) yield = Handlebars.compile(template)(context)
+      
+      // Add the script
+      yield += '\n<script src="/index.js"></script>'
   
-    if (req.url === '/index.js') res.end('new ' + Sara.Client.toString())
+      res.end(Handlebars.compile(layout)({ yield: new Handlebars.SafeString(yield) }))
+    }
     
+    // Try index.js
+    if (req.url === '/index.js') {
+      res.end('extend = ' + extend + '\n'
+      + Sara.toString() + '\n'
+      + 'Sara.Client = ' + Sara.Client.toString() + '\n'
+      + 'new Sara(' + JSON.stringify(app) + ')') 
+    }
+    
+    // Try an asset
     asset = app.root + '/assets' + req.url
     if (fs.existsSync(asset) && fs.lstatSync(asset).isFile()) res.end(fs.readFileSync(asset))
-    
-    if (Presenter) { // if it's looking for a route
-        // Load the presenter
-        if (Presenter instanceof Function) yield = new Presenter()
-        else yield = Presenter
-        
-        // Add the script
-        yield += '\n<script src="/index.js"></script>'
-                
-        // {{{}}} shortcut
-        yield = new app.templates.SafeString(yield)
-    
-      res.end(app.templates.compile(layout)({ yield: yield }))
-    }
     
     res.writeHead(404, { "Content-Type": "text/plain" })
     res.write("404 Not found")
@@ -131,15 +163,15 @@ Sara.Resource = function Resource(object) {
   
 }
 
+Sara.Resource.all = function all() {
+  return { posts: [{ id: 1, title: 'foo', content: 'wat' }, { id: 2, title: 'bar', content: 'wut' }] }
+}
+
 /*!
  *
  * VIEW
  *
  */
-
-Sara.View = function View(object) {
-  
-}
 
 /*!
  *
@@ -148,7 +180,13 @@ Sara.View = function View(object) {
  */
 
 Sara.Presenter = function Presenter(object) {
-  return object.content
+  extend(this, object)
+}
+Sara.Presenter.extend = Sara.Resource.extend = function extend(object) {
+  for (var prop in object) {
+    this[prop] = object[prop]
+  }
+  return this
 }
 
 module.exports = Sara
