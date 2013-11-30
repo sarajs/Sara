@@ -1,6 +1,6 @@
-var Application = require('sara')
+var Application = require('../../sara')
 
-module.exports = new Application.Resource({
+module.exports = Application.Resource({
   title: String
 , author: String
 , created: Date
