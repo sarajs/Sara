@@ -3,7 +3,6 @@ var Application = require('../../sara')
 
 module.exports = Application.Resource.extend({
   name: 'post'
-, app: app
 , attributes: {
     title: String
   , author: String

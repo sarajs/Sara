@@ -96,23 +96,9 @@ Sara.Server = function Server(app) {
     , server
     , context
   
-  app.layout
+  app.env = app.env || process.env.NODE_ENV
   app.port = process.env.PORT || 1337
   app.root = path.dirname(module.parent.filename)
-  
-  // Create CRUD routes for resources
-  for (var name in app.resources) {
-    var Resource = app.resources[name]
-      , partials = fs.readdirSync(app.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
-    
-    for (var i = partials.length; i--;) Handlebars.registerPartial(partials[i].trimExtension().substr(1), fs.readFileSync(app.root + '/views/' + name + 's/' + partials[i]).toString())
-    
-    app.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
-    app.routes['/' + name + 's/' + ':id'] = { resource: Resource, action: 'find', template: name + 's/show.html' } // READ
-    app.routes['/' + name + 's'] = { resource: Resource, action: 'all', tempalte: name + 's/index.html' } // READ
-    app.routes['/' + name + 's/' + ':id/' + 'edit'] = { resource: Resource, action: 'find', template: name + 's/edit.html' } // UPDATE
-    app.routes['/' + name + 's/' + ':id/' + 'delete'] = { resource: Resource, action: 'find', template: name + 's/delete.html' } // DELETE
-  }
   
   // Load the layout tempalte
   layout = fs.readFileSync(app.root + '/views/' + app.layout).toString()
@@ -172,6 +158,18 @@ Sara.Server = function Server(app) {
   console.log('Sara is waiting for you on port ' + app.port + '.')
 }
 
+Sara.method(function routes(Resource) {
+    partials = fs.readdirSync(this.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
+    
+    for (var i = partials.length; i--;) Handlebars.registerPartial(name + 's/' + partials[i].trimExtension().substr(1), fs.readFileSync(this.root + '/views/' + name + 's/' + partials[i]).toString())
+    
+    this.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
+    this.routes['/' + name + 's/' + ':id'] = { resource: Resource, action: 'find', template: name + 's/show.html' } // READ
+    this.routes['/' + name + 's'] = { resource: Resource, action: 'all', template: name + 's/index.html' } // READ
+    this.routes['/' + name + 's/' + ':id/' + 'edit'] = { resource: Resource, action: 'find', template: name + 's/edit.html' } // UPDATE
+    this.routes['/' + name + 's/' + ':id/' + 'delete'] = { resource: Resource, action: 'find', template: name + 's/delete.html' } // DELETE
+})
+
 /*!
  *
  * RESOURCE
@@ -191,22 +189,7 @@ Sara.Resource.find = function find(id) {
   return { id: 1, title: 'foo', content: 'wat' }
 }
 
-/*!
- *
- * VIEW
- *
- */
-
-/*!
- *
- * PRESENTER
- *
- */
-
-Sara.Presenter = function Presenter(object) {
-  extend(this, object)
-}
-Sara.extend = Sara.Presenter.extend = Sara.Resource.extend = function extend(object) {
+Sara.Resource.extend = function extend(object) {
   for (var prop in object) {
     this[prop] = object[prop]
   }
