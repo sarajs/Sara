@@ -1,4 +1,4 @@
-var Application = require('../../sara')
+var Application = require('../../index')
   , app = require('../app')
 
 module.exports = Application.Resource.extend({

@@ -1,4 +1,4 @@
-var Application = require('../sara.js')
+var Application = require('../index')
   , Post = require('./resources/post')
 
 module.exports = app = new Application({
@@ -8,7 +8,7 @@ module.exports = app = new Application({
 })
 
 // Resources
-app.resource(Post)
+app.all(Post)
 
 // Routes
 app.get('/', app.routes['/posts'])
