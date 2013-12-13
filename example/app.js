@@ -4,8 +4,11 @@ var Application = require('../sara.js')
 module.exports = app = new Application({
   env: 'development'
 , templating: 'handlebars'
+, layout: 'views/layout.html'
 })
 
-app.get('/', app.router.posts)
+// Resources
+app.resource(Post)
 
-app.routes(Post)
+// Routes
+app.get('/', app.routes['/posts'])

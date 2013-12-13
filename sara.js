@@ -1,86 +1,93 @@
 /*!
  *
- * UTILITIES
+ * NATIVE EXTENSIONS
+ *
+ * Extension defenitions are under UTILITIES.
  *
  */
 
-Function.prototype.method = function (object) {
-  if (object instanceof Function) {
-    this.prototype[object.name] = object
-    return this
-  }
-  return this.prototype[object]
-}
-
-Array.prototype.each = function(iterator, context) {
-  for (var i = 0, length = this.length; i < length; i++) {
-    if (iterator.call(context, this[i], i, this) === {}) return
-  }
-}
-
-Array.prototype.filter = function(iterator, context) {
-  var results = []
-  if (this == null) return results
-  this.each(function(value, index, list) {
-    if (iterator.call(context, value, index, list)) results.push(value)
-  })
-  return results
-}
-
-function extend(target, object) {
-  for (var prop in object) {
-    target[prop] = object[prop]
-  }
-  return target
-}
-
-String.prototype.trimExtension = function () {
-  return this.replace(/\.[^/.]+$/, '')
-}
+method.call(Function, method).method(add)
+Array.method(each).method(filter)
+String.method(trimExtension)
 
 /*!
  *
  * SARA
  *
+ * The application class.
+ *
  */
 
-function Sara(options) {
-  // Singleton goodness
-  if (arguments.callee._instance) return arguments.callee._instance
-  arguments.callee._instance = this
-
-  var Local = typeof process === 'undefined' ? Sara.Client : Sara.Server
+var Sara = module.exports = (function Sara(options) {
+  var Local = typeof window === 'undefined' ? Sara.Server : Sara.Client
 
   // Defaults
   this.cache = {}
   this.templating = null
   this.websockets = null
-  this.layout = 'layout.html'
+  this.layout = 'views/layout.html'
   this.resources = {}
   this.routes = {}
   
   // Load options
-  extend(this, options)
+  extend.call(this, options)
   
   // Server
   new Local(this)
-}
+
+}).method(function getRoute(url) {
+
+	if (this.routes[req.url]) return this.routes[req.url]
+
+  for (var path in this.routes) {
+    var match = url.match(new RegExp(path.replace(/:[^\s\/]+/g, '(.+)')))
+    if (match && url === match[0]) {
+      return {
+        resource: this.routes[path].resource
+      , action: this.routes[path].action
+      , template: this.routes[path].template
+      , variables: {
+          id: match[1]
+        }
+      }
+    }
+  }
+  
+  return false
+
+}).method(function resource(Constructor) {
+	var fs = require('fs')
+		, path = require('path')
+		, name = Constructor.name.toLowerCase()
+
+  partials = fs.readdirSync(this.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
+  
+  for (var i = partials.length; i--;) Handlebars.registerPartial(name + 's/' + partials[i].trimExtension().substr(1), fs.readFileSync(path.resolve(this.root, 'views', name + 's/' + partials[i]).toString()))
+  
+  this.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
+  this.routes['/' + name + 's/' + ':id'] = { resource: Constructor, action: 'find', template: name + 's/show.html' } // READ
+  this.routes['/' + name + 's'] = { resource: Constructor, action: 'all', template: name + 's/index.html' } // READ
+  this.routes['/' + name + 's/' + ':id/' + 'edit'] = { resource: Constructor, action: 'find', template: name + 's/edit.html' } // UPDATE
+  this.routes['/' + name + 's/' + ':id/' + 'delete'] = { resource: Constructor, action: 'find', template: name + 's/delete.html' } // DELETE
+})
 
 /*!
  *
  * CLIENT
- * This code must rely only the window object
+ *
+ * This code must rely only on native objects and the window object
  *
  */
 
-Sara.Client = function Client(object) {
+Sara.Client = function Client(app) {
   console.log("new client")
 }
 
 /*!
  *
  * SERVER
- * This code must rely only the process object
+ *
+ * This code must rely only on native objects and the process object
  *
  */
 
@@ -101,14 +108,14 @@ Sara.Server = function Server(app) {
   app.root = path.dirname(module.parent.filename)
   
   // Load the layout tempalte
-  layout = fs.readFileSync(app.root + '/views/' + app.layout).toString()
+  layout = fs.readFileSync(path.resolve(app.root, app.layout)).toString()
 
   server = http.createServer(function (req, res) {
-    routeObject = app.routes[req.url] || matchRoute()
+    routeObject = app.getRoute(req.url)
     
     if (routeObject) {
       context = routeObject.resource ? routeObject.resource[routeObject.action](routeObject.variables) : {}
-      template = fs.readFileSync(app.root + '/views/' + routeObject.template).toString()
+      template = fs.readFileSync(path.resolve(app.root, routeObject.template)).toString()
       
       // Load the presenter
       yield = Handlebars.compile(template)(context)
@@ -128,72 +135,85 @@ Sara.Server = function Server(app) {
     }
     
     // Try an asset
-    asset = app.root + '/assets' + req.url
-    if (fs.existsSync(asset) && fs.lstatSync(asset).isFile()) res.end(fs.readFileSync(asset))
+    asset = path.resolve(app.root, 'assets', req.url)
+    if (fs.existsSync(asset) && fs.lstatSync(asset).isFile()) return res.end(fs.readFileSync(asset))
     
     res.writeHead(404, { "Content-Type": "text/plain" })
     res.write("404 Not found")
-    res.end()
-    
-    function matchRoute() {
-      for (var route in app.routes) {
-        var match = req.url.match(new RegExp(route.replace(/:[^\s\/]+/g, '(.+)')))
-        if (match && req.url === match[0]) {
-          return {
-            resource: app.routes[route].resource
-          , action: app.routes[route].action
-          , template: app.routes[route].template
-          , variables: {
-              id: match[1]
-            }
-          }
-        }
-      }
-      
-      return false
-    }
+    return res.end()
   })
   
   server.listen(app.port)
   console.log('Sara is waiting for you on port ' + app.port + '.')
 }
 
-Sara.method(function routes(Resource) {
-    partials = fs.readdirSync(this.root + '/views/' + name + 's/').filter(function (filename) { return filename.charAt(0) === '_' })
-    
-    for (var i = partials.length; i--;) Handlebars.registerPartial(name + 's/' + partials[i].trimExtension().substr(1), fs.readFileSync(this.root + '/views/' + name + 's/' + partials[i]).toString())
-    
-    this.routes['/' + name + 's/' + 'new'] = { template: name + 's/new.html' } // CREATE
-    this.routes['/' + name + 's/' + ':id'] = { resource: Resource, action: 'find', template: name + 's/show.html' } // READ
-    this.routes['/' + name + 's'] = { resource: Resource, action: 'all', template: name + 's/index.html' } // READ
-    this.routes['/' + name + 's/' + ':id/' + 'edit'] = { resource: Resource, action: 'find', template: name + 's/edit.html' } // UPDATE
-    this.routes['/' + name + 's/' + ':id/' + 'delete'] = { resource: Resource, action: 'find', template: name + 's/delete.html' } // DELETE
-})
-
 /*!
  *
  * RESOURCE
  *
+ * A class meant to be extended by the framework user for creating resources.
+ *
  */
 
-Sara.Resource = function Resource(object) {
-}
-
-Sara.Resource.all = function all() {
-  console.log(this)
+Sara.Resource = (function Resource(object) {
+}).add(function all() {
   return { posts: [{ id: 1, title: 'foo', content: 'wat' }, { id: 2, title: 'bar', content: 'wut' }] }
-}
-
-Sara.Resource.find = function find(id) {
-  console.log(this)
+}).add(function find(id) {
   return { id: 1, title: 'foo', content: 'wat' }
+}).add(extend)
+
+/*!
+ *
+ * UTILITIES
+ *
+ * Like underscore.js, yeah!
+ *
+ */
+
+// Add a function as a property of an object
+function add(func) {
+	this[func.name] = func
+	return this
 }
 
-Sara.Resource.extend = function extend(object) {
+// Copy all of the properties in the source objects over to the destination object
+function extend(object) {
   for (var prop in object) {
     this[prop] = object[prop]
   }
   return this
 }
 
-module.exports = Sara
+// Filters an objects keys by an iterator function
+function filter(iterator, context) {
+  var results = []
+  if (this == null) return results
+  this.each(function(value, index, list) {
+    if (iterator.call(context, value, index, list)) results.push(value)
+  })
+  return results
+}
+
+// Iterates over an objects keys
+function each(iterator, context) {
+  for (var i = 0, length = this.length; i < length; i++) {
+    if (iterator.call(context, this[i], i, this) === {}) return
+  }
+}
+
+// A prototyping helper
+function method(method) {
+  if (method instanceof Function) {
+    if (method.name) {
+      this.prototype[method.name] = method
+      return this
+    }
+    throw 'Attempted to prototype anonymous function to ' + this
+  }
+  return this.prototype[method]
+}
+
+// Removes the extension from a file
+function trimExtension() {
+  return this.replace(/\.[^/.]+$/, '')
+}
