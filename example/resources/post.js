@@ -1,13 +1,10 @@
-var Application = require('../../index')
-  , app = require('../app')
+var Application = require('../..')
 
 module.exports = Application.Resource.extend({
-  name: 'post'
-, attributes: {
-    title: String
-  , author: String
-  , created: Date
-  , updated: Date
-  , content: String 
-  }
+	_name: 'post'
+, title: String
+, author: String
+, created: Date
+, updated: Date
+, content: String 
 })

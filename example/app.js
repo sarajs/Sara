@@ -1,14 +1,14 @@
-var Application = require('../index')
+var Application = require('..')
   , Post = require('./resources/post')
 
-module.exports = app = new Application({
+var app = module.exports = new Application({
   env: 'development'
 , templating: 'handlebars'
 , layout: 'views/layout.html'
 })
 
 // Resources
-app.all(Post)
+app.resource(Post)
 
 // Routes
 app.get('/', app.routes['/posts'])
