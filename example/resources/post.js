@@ -1,6 +1,6 @@
-var Application = require('../..')
+var Sara = require('../..')
 
-module.exports = Application.Resource.extend({
+with (Sara) module.exports = Resource.extend({
 	_name: 'post'
 , schema: {
 		title: String

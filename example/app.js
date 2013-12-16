@@ -1,10 +1,11 @@
-var Application = require('..')
+var Sara = require('..')
   , Post = require('./resources/post')
+  , Layout = require('./views/layout')
   , PostView = require('./views/post')
 
-var app = module.exports = new Application({
+var app = module.exports = new Sara({
   env: 'development'
-, layout: 'views/layout.html'
+, layout: Layout
 , cache: {
 		'posts': [
 			new Post({ id: 1, title: 'foo', content: 'bar' })

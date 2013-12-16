@@ -1,7 +1,7 @@
-var Application = require('../..')
+var Sara = require('../..')
 
-module.exports = Application.View.extend({
-	layout: [
+with (Sara) module.exports = View.extend({
+	layout: new HTML([
 		["!DOCTYPE html"],
 		["html", [
 			["head", [
@@ -17,8 +17,8 @@ module.exports = Application.View.extend({
 						["a", { "href": "/posts/new" }, ["New Post"]]
 					]]
 				]],
-				["main", Application.View.yield]
+				["main", View.yield]
 			]]
 		]]
-	]
+	])
 })

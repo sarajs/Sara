@@ -1,14 +1,14 @@
-var Application = require('../..')
+var Sara = require('../..')
 	, Post = require('../resources/post')
 	, Layout = require('layout')
 
-module.exports = Layout.extend({
+with (Sara) module.exports = Layout.extend({
 	initialize: function () {
 		console.log("now rendering the posts view!")
 	}
-, index: ['p', 'All posts.']
-, show: ['p', 'A post.']
-, form: 'The form to '
-, edit: ['p', this.form + 'edit a post.']
-, create: ['p', this.form + 'create  a post.']
+, index: new HTML(['p', 'All posts.'])
+, show: new HTML(['p', 'A post.'])
+, form: new HTML('The form to ')
+, edit: new HTML(['p', this.form + 'edit a post.'])
+, create: new HTML(['p', this.form + 'create  a post.'])
 })
