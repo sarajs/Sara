@@ -6,7 +6,6 @@ var Sara = require('..')
 
 var app = module.exports = new Sara({
   env: 'development'
-, layout: Layout
 , cache: {
 		'posts': [
 			new Post({ id: 1, title: 'foo', content: 'bar' })
