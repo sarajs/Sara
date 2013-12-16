@@ -8,8 +8,8 @@ var app = module.exports = new Sara({
   env: 'development'
 , cache: {
 		'posts': [
-			new Post({ id: 1, title: 'foo', content: 'bar' })
-		, new Post({ id: 2, title: 'wat', content: 'wut' })
+			new Post({ title: 'foo', content: 'bar' })
+		, new Post({ title: 'wat', content: 'wut' })
 		]
 	}
 })
