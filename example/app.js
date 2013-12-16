@@ -1,7 +1,8 @@
 var Sara = require('..')
-  , Post = require('./resources/post')
   , Layout = require('./views/layout')
+  , Post = require('./resources/post')
   , PostView = require('./views/post')
+  , PostController = require('./controllers/post')
 
 var app = module.exports = new Sara({
   env: 'development'
@@ -18,4 +19,4 @@ var app = module.exports = new Sara({
 app.resource(Post)
 
 // Routes
-app.get('/', PostView.index)
+app.get('/', PostController.index)

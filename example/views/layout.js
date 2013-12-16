@@ -1,7 +1,13 @@
 var Sara = require('../..')
 
-with (Sara) module.exports = View.extend({
-	layout: new HTML([
+with (Sara) module.exports = new View({
+
+	initialize: function () {
+		console.log('Rendering the layout.')
+	}
+
+, layout: new HTML([
+
 		["!DOCTYPE html"],
 		["html", [
 			["head", [
@@ -20,5 +26,7 @@ with (Sara) module.exports = View.extend({
 				["main", View.yield]
 			]]
 		]]
+		
 	])
+	
 })
