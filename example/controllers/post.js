@@ -1,13 +1,13 @@
 var Sara = require('../..')
 	, app = require('../app')
-	, Post = require('../resources/post')
+	, Post = require('../models/post')
 
 with (Sara) module.exports = new Controller('Post', {
 
 	// GET /posts
 	'index': function (request) {
 		var PostIndexView = require('../views/posts/index')
-		return new PostIndexView(Post.all)
+		return PostIndexView.render(Post.all)
 	}
 
 	// GET /posts/:id

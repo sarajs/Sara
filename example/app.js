@@ -1,21 +1,21 @@
 var Sara = require('..')
   , Layout = require('./views/layout')
-  , Post = require('./resources/post')
-  , PostView = require('./views/post')
+  , Post = require('./models/post')
+  , PostIndexView = require('./views/posts/index')
   , PostController = require('./controllers/post')
 
 var app = module.exports = new Sara({
   env: 'development'
-, cache: {
-		'posts': [
-			new Post({ title: 'foo', content: 'bar' })
-		, new Post({ title: 'wat', content: 'wut' })
-		]
-	}
 })
 
 // Resources
 app.resource(Post)
+
+// Cache
+app.cache.posts = [
+	new Post({ title: 'foo', content: 'bar' })
+, new Post({ title: 'wat', content: 'wut' })
+]
 
 // Routes
 app.get('/', PostController.index)

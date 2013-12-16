@@ -6,7 +6,7 @@ with (Sara) module.exports = new View('Layout', {
 		console.log('Rendering the layout.')
 	}
 
-, html: new HTML([
+, html: HTML.stringify([
 
 		["!DOCTYPE html"],
 		["html", [
@@ -19,8 +19,8 @@ with (Sara) module.exports = new View('Layout', {
 				["header", [
 					["h1", "Sara Example"],
 					["nav", [
-						["a", { "href": "/" }, ["Posts"]],
-						["a", { "href": "/posts/new" }, ["New Post"]]
+						["a", { "href": "/" }, "Posts"], ["br"],
+						["a", { "href": "/posts/new" }, "New Post"]
 					]]
 				]],
 				["main", View.yield]

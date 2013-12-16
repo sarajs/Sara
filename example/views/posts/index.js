@@ -1,6 +1,6 @@
-var Sara = require('../..')
-	, Post = require('../resources/post')
-	, Layout = require('./layout')
+var Sara = require('../../..')
+	, Post = require('../../models/post')
+	, Layout = require('../layout')
 
 with (Sara) module.exports = new View('Post', {
 
@@ -10,6 +10,6 @@ with (Sara) module.exports = new View('Post', {
 		console.log("Rendering the post index view.")
 	}
 
-, html: new HTML(['p', 'All posts.'])
+, html: HTML.stringify(['p', 'All posts.'])
 
 })
