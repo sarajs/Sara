@@ -19,3 +19,10 @@ app.resource(Post)
 
 // Routes
 app.get('/', PostController.index)
+app.get('/posts', PostController.index)
+app.get('/posts/:id', PostController.show)
+app.get('/posts/:id/new', PostController.new)
+app.get('/posts/:id/edit', PostController.edit)
+app.post('/posts', PostController.create)
+app.put('/posts/:id', PostController.update)
+app.delete('/posts/:id', PostController.destroy)
