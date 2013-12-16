@@ -1,9 +1,9 @@
 var Application = require('..')
   , Post = require('./resources/post')
+  , PostView = require('./views/post')
 
 var app = module.exports = new Application({
   env: 'development'
-, templating: 'handlebars'
 , layout: 'views/layout.html'
 , cache: {
 		'posts': [
@@ -17,11 +17,4 @@ var app = module.exports = new Application({
 app.resource(Post)
 
 // Routes
-app.get('/', app.routes['/posts'])
-
-app.routes['/'].html({
-	navbar: [
-		a: { content: 'homepage', href: 'http://google.com/' }
-	, a: { content: 'homepage', href: 'http://google.com/' }
-	]
-})
+app.get('/', PostView.index)
