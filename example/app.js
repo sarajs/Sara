@@ -1,7 +1,6 @@
 var Sara = require('..')
   , Layout = require('./views/layout')
   , Post = require('./models/post')
-  , PostIndexView = require('./views/posts/index')
   , PostController = require('./controllers/post')
 
 var app = module.exports = new Sara({

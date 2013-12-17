@@ -6,7 +6,7 @@ with (Sara) module.exports = new View('Layout', {
 		console.log('Rendering the layout.')
 	}
 
-, html: HTML.stringify([
+, html: new HTML([
 
 		["!DOCTYPE html"],
 		["html", [

@@ -10,6 +10,6 @@ with (Sara) module.exports = new View('Post', {
 		console.log("Rendering the post index view.")
 	}
 
-, html: HTML.stringify(['p', 'All posts.'])
+, html: new HTML(['p', 'All posts.'])
 
 })
