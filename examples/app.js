@@ -1,3 +1,4 @@
+// Modules
 var Sara = require('..')
   , Layout = require('./views/layout')
   , Todo = require('./models/todo')
@@ -21,7 +22,7 @@ with (TodoController) {
   app.delete('/:id', destroy)
 }
 
-// For testing
+// Data for testing
 app.cache.todos = [
 	new Todo({ 'title': 'Play with Sara\'s TodoMVC example', 'completed': true })
 , new Todo({ 'title': 'Breeze through Sara\'s guide', 'completed': false })
