@@ -1,27 +1,24 @@
 var Sara = require('..')
   , Layout = require('./views/layout')
-  , Post = require('./models/post')
-  , PostController = require('./controllers/post')
+  , Todo = require('./models/todo')
+  , TodoController = require('./controllers/todo')
 
 var app = module.exports = new Sara({
   env: 'development'
 })
 
 // Resources
-app.resource(Post)
+app.resource(Todo)
 
 // Cache
-app.cache.posts = [
-	new Post({ title: 'foo', content: 'bar' })
-, new Post({ title: 'wat', content: 'wut' })
+app.cache.todos = [
+	new Todo({ title: 'foo', content: 'bar' })
+, new Todo({ title: 'wat', content: 'wut' })
 ]
 
 // Routes
-app.get('/', PostController.index)
-app.get('/posts', PostController.index)
-app.get('/posts/:id', PostController.show)
-app.get('/posts/:id/new', PostController.new)
-app.get('/posts/:id/edit', PostController.edit)
-app.post('/posts', PostController.create)
-app.put('/posts/:id', PostController.update)
-app.delete('/posts/:id', PostController.destroy)
+app.get('/', TodoController.index)
+app.get('/todos', TodoController.index)
+app.post('/todos', TodoController.create)
+app.put('/todos/:id', TodoController.update)
+app.delete('/todos/:id', TodoController.destroy)

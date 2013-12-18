@@ -17,13 +17,9 @@ with (Sara) module.exports = new View('Layout', {
 			]],
 			["body", [
 				["header", [
-					["h1", "Sara Example"],
-					["nav", [
-						["a", { "href": "/" }, "Posts"], ["br"],
-						["a", { "href": "/posts/new" }, "New Post"]
-					]]
+					["h1", "Todos"]
 				]],
-				["main", View.yield]
+				["main", this.yield]
 			]]
 		]]
 		
