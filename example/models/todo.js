@@ -1,6 +1,6 @@
 var Sara = require('../..')
 
-// Todo model
+// The todo model
 with (Sara) var Todo = module.exports = new Model('Todo', {
 
   'title': String

@@ -2,19 +2,15 @@ var Sara = require('../../..')
 	, Todo = require('../../models/todo')
 	, Layout = require('../layout')
 
-with (Sara) module.exports = new View('Todo', {
+with (Sara) module.exports = new View('Todo', function initialize() {
 
-	layout: Layout
+	console.log("Rendering the todo index view.")
 
-, initialize: function () {
-		console.log("Rendering the todo index view.")
-	}
+}).html([
 
-, html: new HTML([
-    ["h2", "All"],
-    ["ul", [
-      ["li", "first todo"]
-    ]]
-  ])
+  ["h2", "All"],
+  ["ul", [
+    ["li", "first todo"]
+  ]]
 
-})
+])

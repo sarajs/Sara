@@ -28,17 +28,17 @@ TodoController.action('completed', function (request) {
 // POST /
 TodoController.action('create', function (request) {
 	new Todo(request.body).save()
-	return app.routes['/todos'].call()
+	return app.visit('/todos')
 })
 
 // PUT /
-TodoController.action('update': function (request) {
+TodoController.action('update', function (request) {
 	Todo.find(request.body.id).update(request.body)
-	return app.routes['/todos'].call()
+	return app.visit('/todos')
 })
 
 // DELETE /
 TodoController.action('destroy', function (request) {
 	Todo.find(request.body.id).destroy()
-	return app.routes['/todos'].call()
+	return app.visit('/todos')
 })

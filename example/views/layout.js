@@ -1,10 +1,11 @@
 var Sara = require('../..')
 
 with (Sara) var Layout = module.exports = new View('Layout', function initialize() {
-	console.log('Rendering the layout.')
-})
 
-Layout.html([
+	console.log('Rendering the layout.')
+
+}).html([
+
 	["!DOCTYPE html"],
 	["html", [
 		["head", [
@@ -16,7 +17,8 @@ Layout.html([
 			["header", [
 				["h1", "Todos"]
 			]],
-			["main" ]
+			["main"]
 		]]
 	]]
+
 ])

@@ -11,16 +11,19 @@ var app = module.exports = new Sara({
 // Resources
 app.resource(Todo)
 
-// Bootstrapped data
-app.cache.todos = [
-	new Todo({ title: 'foo', content: 'bar' })
-, new Todo({ title: 'wat', content: 'wut' })
-]
-
 // Routes
-app.get('/', TodoController.all)
-app.get('/active', TodoController.active)
-app.get('/completed', TodoController.completed)
-app.post('/', TodoController.create)
-app.put('/:id', TodoController.update)
-app.delete('/:id', TodoController.destroy)
+with (TodoController) {
+  app.get('/', all)
+  app.get('/active', active)
+  app.get('/completed', completed)
+  app.post('/', create)
+  app.put('/:id', update)
+  app.delete('/:id', destroy)
+}
+
+// For testing
+app.cache.todos = [
+	new Todo({ 'title': 'Play with Sara\'s TodoMVC example', 'completed': true })
+, new Todo({ 'title': 'Breeze through Sara\'s guide', 'completed': false })
+, new Todo({ 'title': 'Build your own Sara.js app', 'completed': false })
+]
