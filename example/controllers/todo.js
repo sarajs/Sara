@@ -3,9 +3,7 @@ var Sara = require('../..')
 	, Todo = require('../models/todo')
 
 // The Todo Controller
-with (Sara) var TodoController = module.exports = new Controller('Todo', function initialize() {
-  console.log("Initialized TodoController!")
-})
+with (Sara) var TodoController = module.exports = new Controller('Todo')
 
 // GET /
 TodoController.action('all', function (request) {

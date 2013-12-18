@@ -2,13 +2,12 @@
   "name": "sara",
   "version": "0.0.1",
   "main": "./lib/sara.js",
+  "dependencies": {
+    "connect": "~2.12.0"
+  },
   "devDependencies": {
     "grunt": "~0.4.2",
     "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-jasmine": "~0.5.2",
-    "handlebars": "~1.1.2"
-  },
-  "dependencies": {
-    "connect": "~2.12.0"
+    "grunt-contrib-jasmine": "~0.5.2"
   }
 }
