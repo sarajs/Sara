@@ -10,6 +10,11 @@ with (Sara) module.exports = new View('Todo', {
 		console.log("Rendering the todo index view.")
 	}
 
-, html: new HTML(['p', 'All todos.'])
+, html: new HTML([
+    ["h2", "Completed"],
+    ["ul", [
+      ["li", "first todo"]
+    ]]
+  ])
 
 })

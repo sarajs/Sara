@@ -17,8 +17,8 @@ app.cache.todos = [
 ]
 
 // Routes
-app.get('/', TodoController.index)
-app.get('/todos', TodoController.index)
+app.get('/', TodoController.all)
+app.get('/todos', TodoController.all)
 app.post('/todos', TodoController.create)
 app.put('/todos/:id', TodoController.update)
 app.delete('/todos/:id', TodoController.destroy)

@@ -19,7 +19,7 @@ with (Sara) module.exports = new View('Layout', {
 				["header", [
 					["h1", "Todos"]
 				]],
-				["main", this.yield]
+				["main" ]
 			]]
 		]]
 		
