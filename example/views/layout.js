@@ -17,7 +17,7 @@ with (Sara) var Layout = module.exports = new View('Layout', function initialize
 			['header', [
 				['h1', 'Todos']
 			]],
-			['main', []]
+			['main', View.body]
 		]]
 	]]
 
