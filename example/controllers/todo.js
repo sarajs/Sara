@@ -2,38 +2,43 @@ var Sara = require('../..')
 	, app = require('../app')
 	, Todo = require('../models/todo')
 
-with (Sara) module.exports = new Controller('Todo', function initialize() {
-  
+// The Todo Controller
+with (Sara) var TodoController = module.exports = new Controller('Todo', function initialize() {
   console.log("Initialized TodoController!")
-  
-}).action('all', function (request) { // GET /
-	
+})
+
+// GET /
+TodoController.action('all', function (request) {
 	var view = require('../views/todo/all')
 	return view.render(Todo.all())
-	
-}).action('active', function (request) { // GET /active
-  
+})
+
+// GET /active
+TodoController.action('active', function (request) {
 	var view = require('../views/todo/active')
 	return view.render(Todo.active())
-  
-}).action('completed', function (request) { // GET /completed
+})
 
+// GET /completed
+TodoController.action('completed', function (request) {
 	var view = require('../views/todo/completed')
 	return view.render(Todo.completed())
+})
 
-}).action('create', function (request) { // POST /
-
+// POST /
+TodoController.action('create', function (request) {
 	new Todo(request.body).save()
 	return app.routes['/todos'].call()
+})
 
-}).action('update': function (request) { // PUT /
-
+// PUT /
+TodoController.action('update': function (request) {
 	Todo.find(request.body.id).update(request.body)
 	return app.routes['/todos'].call()
+})
 
-}).action('destroy', function (request) { // DELETE /
-
+// DELETE /
+TodoController.action('destroy', function (request) {
 	Todo.find(request.body.id).destroy()
 	return app.routes['/todos'].call()
-
 })

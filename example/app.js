@@ -3,14 +3,15 @@ var Sara = require('..')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
 
+// Our todo-list application
 var app = module.exports = new Sara({
-  env: 'development'
+  environment: 'development'
 })
 
 // Resources
 app.resource(Todo)
 
-// Cache
+// Bootstrapped data
 app.cache.todos = [
 	new Todo({ title: 'foo', content: 'bar' })
 , new Todo({ title: 'wat', content: 'wut' })
@@ -18,7 +19,8 @@ app.cache.todos = [
 
 // Routes
 app.get('/', TodoController.all)
-app.get('/todos', TodoController.all)
-app.post('/todos', TodoController.create)
-app.put('/todos/:id', TodoController.update)
-app.delete('/todos/:id', TodoController.destroy)
+app.get('/active', TodoController.active)
+app.get('/completed', TodoController.completed)
+app.post('/', TodoController.create)
+app.put('/:id', TodoController.update)
+app.delete('/:id', TodoController.destroy)

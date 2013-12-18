@@ -1,16 +1,21 @@
 var Sara = require('../..')
 
-with (Sara) module.exports = new Model('Todo', {
+// Todo model
+with (Sara) var Todo = module.exports = new Model('Todo', {
 
   'title': String
 , 'completed': Boolean
 
-}).add('active', function () {
+}, function initialize() {
+  console.log("Made a new todo!")
+})
 
+// Active todos
+Todo.add('active', function () {
   return this.where({ 'completed': false })
+})
 
-}).add('complete', function () {
-  
+// Completed todos
+Todo.add('complete', function () {
   return this.where({ 'completed': true })
-  
 })
