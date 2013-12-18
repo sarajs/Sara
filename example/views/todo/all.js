@@ -6,7 +6,7 @@ with (Sara) module.exports = new View('Todo', function initialize() {
 
 	console.log("Rendering the todo index view.")
 
-}).html([
+}).layout(Layout).html([
 
   ["h2", "All"],
   ["ul", [
