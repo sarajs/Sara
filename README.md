@@ -26,7 +26,7 @@ How about an app with...
 + socket.io synchronization
 + handlebars templating
 
-See [the example]('/JacksonGariety/Sara/tree/master/example').
+See [the example](https://github.com/JacksonGariety/Sara/tree/master/example).
 
 ## Building
 
