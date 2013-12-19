@@ -4,7 +4,7 @@ var Sara = require('../../..')
 
 with (Sara) module.exports = new View('Todo').layout(Layout).html([
 
-  ['ul', data('todos', [
+  ['ul', each('todos', [
     ['li', [
       ['input', { 'type': 'checkbox', 'checked': data('checked') }]
       ['span', data('title')]

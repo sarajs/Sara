@@ -2,12 +2,12 @@ var Sara = require('../..')
 	, app = require('../app')
 	, Todo = require('../models/todo')
 
-// The Todo Controller
+// The todo controller
 with (Sara) var TodoController = module.exports = new Controller('Todo')
 
 // GET /
 TodoController.action('all', function (request) {
-	var view = require('../views/todo/all')
+  var view = require('../views/todo/all')
 	return view.render(Todo.all())
 })
 
