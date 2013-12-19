@@ -24,7 +24,7 @@ with (TodoController) {
 
 // Data for testing
 app.cache.todos = [
-	new Todo({ 'title': 'Play with Sara\'s TodoMVC example', 'completed': true })
-, new Todo({ 'title': 'Breeze through Sara\'s guide', 'completed': false })
-, new Todo({ 'title': 'Build your own Sara.js app', 'completed': false })
+	new Todo({ title: 'Play with Sara\'s TodoMVC example', completed: true })
+, new Todo({ title: 'Breeze through Sara\'s guide', completed: false })
+, new Todo({ title: 'Build your own Sara.js app', completed: false })
 ]

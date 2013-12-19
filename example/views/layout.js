@@ -1,20 +1,20 @@
 var Sara = require('../..')
 
-with (Sara) var Layout = module.exports = new View('Layout').html([
+with (Sara) var Layout = module.exports = new View('Layout').body('main').html([
 
 	['!DOCTYPE html'],
 	['html', [
-		['head', [
-			['meta', { 'charset': 'utf-8' }],
-			['title', 'Jackson Gariety'],
-			['link', { 'href': '/index.css', 'rel': 'stylesheet', 'type': 'text/css' }]
-		]],
-		['body', [
-			['header', [
-				['h1', 'Todos']
-			]],
-			['main', data('body')]
-		]]
+  		['head', [
+    			['meta', { charset: 'utf-8' }],
+    			['title', 'Jackson Gariety'],
+    			['link', { href: '/index.css', rel: 'stylesheet', type: 'text/css' }]
+  		]],
+  		['body', [
+    			['header', [
+    			  ['h1', 'Todos']
+    		  ]],
+    			['main', bind('main')]
+  		]]
 	]]
 
 ])

@@ -1,17 +1,13 @@
 var Sara = require('../../..')
 	, Todo = require('../../models/todo')
-	, Layout = require('../layout')
+	, layout = require('../layout')
+	, _list = require('./_list')
 
-with (Sara) module.exports = new View('Todo').layout(Layout).html([
+with (Sara) module.exports = new View('Todo').layout(layout).partials([_list]).html([
 
-  ['ul', each('todos', [
-    ['li', [
-      ['input', { 'type': 'checkbox', 'checked': data('checked') }]
-      ['span', data('title')]
-    ]]
-  ])], ['br'],
-  ['a', { 'href': '/' }, 'all'],
-  ['a', { 'href': '/active' }, 'active'],
-  ['a', { 'href': '/completed', 'class': 'active' }, 'completed']
+    bind('_list'),
+    ['a', { href: '/' }, 'all'],
+    ['a', { href: '/active' }, 'active'],
+    ['strong', ['a', { href: '/completed' }, 'completed']]
 
 ])
