@@ -1,39 +1,11 @@
-<html ng-app>
+<html>
   <head>
     <title>Todo List</title>
-    <script>
-      function TodoView($scope) {
-        $scope.todos = [
-          {title:'learn angular', complete:true},
-          {title:'build an angular app', complete:false}];
-       
-        $scope.addTodo = function() {
-          $scope.todos.push({text:$scope.todoTitle, complete:false});
-          $scope.todoTitle = '';
-        };
-       
-        $scope.active = function() {
-          var count = 0;
-          angular.forEach($scope.todos, function(todo) {
-            count += todo.complete ? 0 : 1;
-          });
-          return count;
-        };
-       
-        $scope.archive = function() {
-          var oldTodos = $scope.todos;
-          $scope.todos = [];
-          angular.forEach(oldTodos, function(todo) {
-            if (!todo.complete) $scope.todos.push(todo);
-          });
-        };
-      }
-    </script>
     <link rel="stylesheet" type="text/css" href="index.css">
   </head>
   <body>
-    <h2>Todo</h2>
-    <div ng-controller="TodoView">
+    <div ng-app ng-cloak ng-controller="TodoView">
+      <h2>Todo</h2>
       <span>{{active()}} of {{todos.length}} remaining</span>
       [ <a href="" ng-click="archive()">archive</a> ]
       <ul class="unstyled">
@@ -43,8 +15,7 @@
         </li>
       </ul>
       <form ng-submit="addTodo()">
-        <input type="text" ng-model="todoTitle"  size="30"
-               placeholder="add new todo here">
+        <input type="text" ng-model="todo.title" size="30" placeholder="Something you need to do...">
         <input class="btn-primary" type="submit" value="add">
       </form>
     </div>
