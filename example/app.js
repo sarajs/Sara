@@ -1,13 +1,16 @@
 // Modules
 var Sara = require('..')
-  , Layout = require('./views/layout')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
+  , fs = require('fs')
 
 // Our todo-list application
 var app = module.exports = new Sara({
   environment: 'development'
 })
+
+// Assets
+app.asset('/angular.js', fs.readFileSync(app.root + '/node_modules/sara-angular/lib/angular/angular.min.js').toString())
 
 // Resources
 app.resource(Todo)

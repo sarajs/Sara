@@ -11,11 +11,11 @@ with (Sara) var Todo = module.exports = new Model('Todo', {
 })
 
 // Active todos
-Todo.add('active', function () {
+Todo.add(function active() {
   return this.where({ 'completed': false })
 })
 
 // Completed todos
-Todo.add('complete', function () {
+Todo.add(function complete() {
   return this.where({ 'completed': true })
 })

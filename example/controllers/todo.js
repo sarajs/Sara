@@ -7,19 +7,19 @@ with (Sara) var TodoController = module.exports = new Controller('Todo')
 
 // GET /
 TodoController.action('all', function (request) {
-  var view = require('../views/todo/all')
-	return view.render(Todo.all())
+  var view = require('../views/todo')
+  return view.render(Todo.all())
 })
 
 // GET /active
 TodoController.action('active', function (request) {
-	var view = require('../views/todo/active')
+	var view = require('../views/todo')
 	return view.render(Todo.active())
 })
 
 // GET /completed
 TodoController.action('completed', function (request) {
-	var view = require('../views/todo/completed')
+	var view = require('../views/todo')
 	return view.render(Todo.completed())
 })
 
