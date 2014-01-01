@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "dependencies": {
     "angular": "~1.2.2",
-    "jsdom": "~0.8.10"
+    "jsdom": "~0.8.10",
+    "myth": "~0.2.0"
   }
 }

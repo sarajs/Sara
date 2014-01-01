@@ -2,7 +2,11 @@ body {
   font-family: Helvetica;
 }
 
-span.complete {
+label {
+  user-select: none;
+}
+
+label.completed {
   text-decoration: line-through;
   color: grey;
 }

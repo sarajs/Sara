@@ -7,7 +7,9 @@ with (Sara) var Todo = module.exports = new Model('Todo', {
 , 'completed': Boolean
 
 }, function initialize() {
+ 
   console.log("Made a new todo!")
+  
 })
 
 // Active todos
