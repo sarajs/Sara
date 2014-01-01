@@ -1,5 +1,5 @@
 // Modules
-var Sara = require('..')
+var Sara = require('sara')
   , myth = require('myth')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
@@ -12,7 +12,7 @@ var app = module.exports = new Sara({
 // Resources
 app.resource(Todo)
 
-// CSS postprocessing
+// Preprocessing
 app.use('.css', myth)
 
 // Routes
@@ -26,8 +26,6 @@ with (TodoController) {
 }
 
 // Data for testing
-app.cache.todos = [
-	new Todo({ title: 'Play with Sara\'s TodoMVC example', completed: true })
-, new Todo({ title: 'Breeze through Sara\'s guide', completed: false })
-, new Todo({ title: 'Build your own Sara.js app', completed: false })
-]
+new Todo({ title: 'Play with Sara\'s TodoMVC example', completed: true })
+new Todo({ title: 'Breeze through Sara\'s guide', completed: false })
+new Todo({ title: 'Build your own Sara.js app', completed: false })
