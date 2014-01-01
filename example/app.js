@@ -1,5 +1,5 @@
 // Modules
-var Sara = require('sara')
+var Sara = require('..')
   , myth = require('myth')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
