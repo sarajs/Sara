@@ -1,42 +1,39 @@
 var Sara = require('../..')
-	, app = require('../app')
-	, Todo = require('../models/todo')
+  , Todo = require('../models/todo')
 
-// The todo controller
-with (Sara) var TodoController = module.exports = new Controller('Todo')
+Sara.Controller = require('sara-angular') // Load angular
 
-// GET /
-TodoController.action('all', function (request) {
-  var view = require('../views/todo')
-  return view.render(Todo.all())
-})
+with (Sara) var TodoController = module.exports = new Controller('Todo', function TodoController($scope) {
+  var app = require('../app')
 
-// GET /active
-TodoController.action('active', function (request) {
-	var view = require('../views/todo')
-	return view.render(Todo.active())
-})
-
-// GET /completed
-TodoController.action('completed', function (request) {
-	var view = require('../views/todo')
-	return view.render(Todo.completed())
-})
-
-// POST /
-TodoController.action('create', function (request) {
-	new Todo(request.body).save()
-	return app.visit('/todos')
-})
-
-// PUT /
-TodoController.action('update', function (request) {
-	Todo.find(request.body.id).update(request.body)
-	return app.visit('/todos')
-})
-
-// DELETE /
-TodoController.action('destroy', function (request) {
-	Todo.find(request.body.id).destroy()
-	return app.visit('/todos')
+  $scope.todos = app.cache.todos
+ 
+  $scope.addTodo = function() {
+    var last = $scope.todos[$scope.todos.length - 1]
+    $scope.todos.push({ title: $scope.todo.title, completed: false, id: last ? last.id + 1 : 1 })
+    $scope.todo.title = ''
+  }
+  
+  $scope.$evalAsync(function() {
+    var prerendered = document.querySelectorAll("[data-prerendered]")
+    for (var content = prerendered.length; content--;) {
+      prerendered[content].parentNode.removeChild(prerendered[content])
+    }
+  })
+  
+  $scope.active = function() {
+    var count = 0
+    angular.forEach($scope.todos, function(todo) {
+      count += todo.completed ? 0 : 1
+    })
+    return count
+  }
+ 
+  $scope.archive = function() {
+    var oldTodos = $scope.todos
+    $scope.todos = []
+    angular.forEach(oldTodos, function(todo) {
+      if (!todo.completed) $scope.todos.push(todo)
+    })
+  }
 })

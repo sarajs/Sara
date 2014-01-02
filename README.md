@@ -1,20 +1,14 @@
 # Sara
 
-The un-opinionated, all-javascript framework.
-
-## What is Sara for?
-
-Efficiently building modern, isomorphic apps.
+The modern, isomorphic JavaScript framework for Node.js.
 
 ## What makes Sara so great?
 
 Well, she's...
 
-+ one framework that spans both client and server
-+ simple (`new Resource()`, `new View()`, `new Presenter()`)
-+ un-opinionated
-+ skinny (10kb min, gzipped)
-+ fun to be around (`npm install -g sara`)
++ eaily paired with any JavaScript view layer like Angular or React
++ skinny (10kb client-side)
++ a node module at heart, (no `curl`)
 
 ## Example
 

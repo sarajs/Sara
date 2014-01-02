@@ -3,8 +3,8 @@ var Sara = require('../..')
 // The todo model
 with (Sara) var Todo = module.exports = new Model('Todo', {
 
-  'title': String
-, 'completed': Boolean
+  title: String
+, completed: Boolean
 
 }, function initialize() {
  
