@@ -13,7 +13,7 @@ module.exports = new Sara.Controller('Todo', function TodoController($scope) {
     todo.save()
     $scope.title = ''
   }
-   
+  
   $scope.archive = function() {
     angular.forEach(Todo.completed(), function (todo) {
       todo.destroy()

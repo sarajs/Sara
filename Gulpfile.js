@@ -25,6 +25,7 @@ gulp.task('lint', function() {
       , laxcomma: true
       , boss: true
       , eqnull: true
+      , evil: true
       })
     , reporter = jshint.reporter('default')
 

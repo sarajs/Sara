@@ -26,8 +26,8 @@ See [the example](https://github.com/JacksonGariety/Sara/tree/master/example).
 
 Sara is open source.
 
-Edit `sara.js` and then test/minify by running...
+Edit `lib/*.js` and then lint/test by running...
 
-    $ grunt
+    $ gulp
 
 ...from inside of the repo.
