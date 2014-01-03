@@ -1,6 +1,6 @@
 var Sara = require('../')
   , should = require('should')
-  , app = require('../example/app.js')
+  , app = require('../examples/sara-angular-example/app.js')
 
 describe("Sara Application", function () {
 

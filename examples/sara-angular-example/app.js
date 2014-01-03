@@ -24,4 +24,4 @@ new Todo({ title: 'Breeze through the guide', completed: false }).save()
 new Todo({ title: 'Build your own Sara.js app', completed: false }).save()
 
 // FIXME: this is a hack, remove it
-if (!process.browser) TodoList.adapter(require('sara-angular'))
+if (!process.browser) require('sara-angular').bundle(TodoList)

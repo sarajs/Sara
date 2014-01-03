@@ -3,7 +3,7 @@ var Sara = require('sara')
 // Load angular
 Sara.Controller = require('sara-angular')
 
-var TodoController = module.exports = new Sara.Controller('Todo', function TodoController($scope) {
+module.exports = new Sara.Controller('Todo', function TodoController($scope) {
   var Todo = require('../models/todo')
 
   $scope.Todo = Todo
@@ -23,8 +23,8 @@ var TodoController = module.exports = new Sara.Controller('Todo', function TodoC
   // Hide prerendered HTML
   $scope.$evalAsync(function () {
     var prerendered = document.querySelectorAll("[data-prerendered]")
-    for (var content = prerendered.length; content--;) {
-      prerendered[content].parentNode.removeChild(prerendered[content])
+    for (var i = prerendered.length; i--;) {
+      prerendered[i].parentNode.removeChild(prerendered[i])
     }
   })
 })
