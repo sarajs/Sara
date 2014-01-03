@@ -1,5 +1,5 @@
 // Modules
-var Sara = require('..')
+var Sara = require('sara')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
   , TodoView = Sara.template('./views/todo.html')
@@ -19,8 +19,9 @@ app.get('/', function (request, response) {
 })
 
 // Data for testing
-new Todo({ title: 'Play with Sara\'s TodoMVC example', completed: true })
-new Todo({ title: 'Breeze through Sara\'s guide', completed: false })
-new Todo({ title: 'Build your own Sara.js app', completed: false })
+new Todo({ title: 'Play with the example', completed: true }).save()
+new Todo({ title: 'Breeze through the guide', completed: false }).save()
+new Todo({ title: 'Build your own Sara.js app', completed: false }).save()
 
+// FIXME: this is a hack, remove it
 if (!process.browser) app.adapter(require('sara-angular'))

@@ -7,7 +7,7 @@ The modern, isomorphic JavaScript framework for Node.js.
 Well, she's...
 
 + eaily paired with any JavaScript view layer like Angular or React
-+ skinny (10kb client-side)
++ skinny (20kb client-side)
 + a node module at heart, (no `curl`)
 
 ## Example

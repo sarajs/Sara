@@ -7,16 +7,16 @@
   <body>
     <div ng-app ng-cloak ng-controller="TodoController">
       <h2>Todo</h2>
-      <span>{{active()}} of {{todos.length}} remaining</span>
+      <span>{{Todo.active().length}} of {{Todo.all().length}} remaining</span>
       [ <a href="" ng-click="archive()">archive</a> ]
       <ul class="unstyled">
-        <li ng-repeat="todo in todos">
+        <li ng-repeat="todo in Todo.all()">
           <input type="checkbox" ng-model="todo.completed" id="{{todo.id}}">
           <label ng-class="{completed: todo.completed}" for="{{todo.id}}">{{todo.title}}</label>
         </li>
       </ul>
       <form ng-submit="addTodo()">
-        <input type="text" ng-model="todo.title" size="30" placeholder="Something you need to do...">
+        <input type="text" ng-model="title" size="30" placeholder="Something you need to do...">
         <input class="btn-primary" type="submit" value="add">
       </form>
     </div>

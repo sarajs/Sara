@@ -1,8 +1,0 @@
-{
-  "name": "sara-example",
-  "version": "0.0.1",
-  "dependencies": {
-    "angular": "~1.2.2",
-    "myth": "~0.2.0"
-  }
-}
