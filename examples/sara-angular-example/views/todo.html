@@ -7,9 +7,9 @@
   </head>
   <body>
     <div data-ng-app data-ng-controller="TodoController">
-      <h2>Todo</h2>
+      <h2>Todo List</h2>
       <span>{{Todo.active().length}} of {{Todo.all().length}} remaining</span>
-      <button data-ng-click="archive()">archive</button>
+      <button data-ng-click="archive()">clear</button>
       <ul>
         <li data-ng-repeat="todo in Todo.all()">
           <input type="checkbox" data-ng-model="todo.completed" id="{{todo.id}}">

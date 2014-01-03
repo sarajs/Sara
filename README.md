@@ -22,7 +22,7 @@ How about an app with...
 
 See [the example](https://github.com/JacksonGariety/Sara/tree/master/examples/sara-angular-example).
 
-## Building
+## Testing
 
 Sara is open source.
 
