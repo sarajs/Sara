@@ -5,13 +5,13 @@ var Sara = require('sara')
   , TodoView = Sara.template('./views/todo.html')
 
 // Our app
-var app = module.exports = new Sara({ env: 'development' })
+var TodoList = module.exports = new Sara({ env: 'development' })
 
 // Resources
-app.resource(Todo)
+TodoList.resource(Todo)
 
 // Routes
-app.get('/', function (request, response) {
+TodoList.get('/', function (request, response) {
   TodoController.render(TodoView, function (rendered) {
     response.write(rendered)
     response.end()
@@ -24,4 +24,4 @@ new Todo({ title: 'Breeze through the guide', completed: false }).save()
 new Todo({ title: 'Build your own Sara.js app', completed: false }).save()
 
 // FIXME: this is a hack, remove it
-if (!process.browser) app.adapter(require('sara-angular'))
+if (!process.browser) TodoList.adapter(require('sara-angular'))

@@ -4,13 +4,13 @@ var Sara = require('sara')
 Sara.Controller = require('sara-angular')
 
 var TodoController = module.exports = new Sara.Controller('Todo', function TodoController($scope) {
-  var app = require('../app')
-    , Todo = require('../models/todo')
+  var Todo = require('../models/todo')
 
   $scope.Todo = Todo
  
   $scope.addTodo = function () {
-    new Todo({ title: $scope.title, completed: false }).save()
+    var todo = new Todo({ title: $scope.title, completed: false })
+    todo.save()
     $scope.title = ''
   }
    
