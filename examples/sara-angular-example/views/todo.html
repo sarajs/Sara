@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <title>Todo List</title>
@@ -8,7 +9,7 @@
     <div data-ng-app data-ng-controller="TodoController">
       <h2>Todo</h2>
       <span>{{Todo.active().length}} of {{Todo.all().length}} remaining</span>
-      <button data-ng-click="archive()">Clear</button>
+      <button data-ng-click="archive()">archive</button>
       <ul>
         <li data-ng-repeat="todo in Todo.all()">
           <input type="checkbox" data-ng-model="todo.completed" id="{{todo.id}}">
@@ -16,9 +17,9 @@
         </li>
       </ul>
       <!-- TODO: This form shoudl have an action="/new" attribute for non-js peeps -->
-      <form ng-submit="addTodo()" method="POST">
-        <input type="text" ng-model="title" size="30" placeholder="Something you need to do...">
-        <button>Add</button>
+      <form data-ng-submit="addTodo()" method="POST">
+        <input type="text" data-ng-model="title" size="30" placeholder="Something you need to do...">
+        <button>add</button>
       </form>
     </div>
   </body>
