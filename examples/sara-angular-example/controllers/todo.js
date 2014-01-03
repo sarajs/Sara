@@ -9,9 +9,11 @@ module.exports = new Sara.Controller('Todo', function TodoController($scope) {
   $scope.Todo = Todo
  
   $scope.addTodo = function () {
-    var todo = new Todo({ title: $scope.title, completed: false })
-    todo.save()
-    $scope.title = ''
+    if ($scope.title) {
+      var todo = new Todo({ title: $scope.title, completed: false })
+      todo.save()
+      $scope.title = ''
+    }
   }
   
   $scope.archive = function() {
