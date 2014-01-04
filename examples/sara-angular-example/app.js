@@ -1,6 +1,7 @@
 // Modules
 var Sara = require('sara').adapter(require('sara-angular'))
-  , _ = Sara.Utils
+
+var _ = require('sara/utils')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
   , TodoView = require('./views/todo')
