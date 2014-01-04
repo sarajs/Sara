@@ -1,7 +1,6 @@
 // Modules
 var Sara = require('sara').adapter(require('sara-angular'))
-
-var _ = require('sara/utils')
+  , _ = require('sara/utils')
   , Todo = require('./models/todo')
   , TodoController = require('./controllers/todo')
   , TodoView = require('./views/todo')
@@ -10,7 +9,7 @@ var _ = require('sara/utils')
 var TodoList = module.exports = new Sara({ env: 'development' })
 
 // Resources
-TodoList.resource(Todo)
+TodoList.stores(Todo)
 
 // Routes
 TodoList.get('/', function (request, response) {
