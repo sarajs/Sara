@@ -7,7 +7,8 @@
     "browserify": "~3.18.0",
     "engine.io": "~0.7.13",
     "jsdom": "~0.8.10",
-    "lodash": "~2.4.1"
+    "lodash": "~2.4.1",
+    "rsvp": "~3.0.1"
   },
   "devDependencies": {
     "gulp": "~3.2.2",
