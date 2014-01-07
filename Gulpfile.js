@@ -1,44 +1,51 @@
 var gulp = require('gulp')
-  , mocha = require('gulp-mocha')
-  , jshint = require('gulp-jshint')
 
-/*!
- *
- * TEST WITH MOCHA
- *
- */
-
-gulp.task('test', function () {
-  gulp.src('test/*-test.js')
-    .pipe(mocha({ ui: 'bdd' }))
-})
-
-/*!
- *
+/**
  * LINT WITH JSHINT
- *
  */
 
 gulp.task('lint', function() {
-  var linter = jshint({
+  var jshint = require('gulp-jshint')
+    , linter = jshint({
         asi: true
       , laxcomma: true
       , boss: true
       , eqnull: true
+      , noarg: true
       , evil: true
       })
     , reporter = jshint.reporter('default')
 
-  gulp.src('./lib/**/*.js')
+
+ gulp.src('./lib/**/*.js')
     .pipe(linter)
     .pipe(reporter)
 })
 
-/*!
- *
- * DEFAULT
- *
+/**
+ * TEST WITH MOCHA
  */
 
+gulp.task('test', function () {
+  var mocha = require('gulp-mocha')
 
-gulp.task('default', ['lint', 'test'])
+  gulp.src('test/*-test.js')
+    .pipe(mocha({ ui: 'bdd' }))
+})
+
+/**
+ * RUN WITH NODEMON
+ */
+
+gulp.task('develop', function () {
+  var nodemon = require('gulp-nodemon')
+
+  gulp.src('./examples/sara-angular-example/app.js')
+    .pipe(nodemon())
+})
+
+/**
+ * DEFAULT
+ */
+
+gulp.task('default', ['lint', 'develop'])
