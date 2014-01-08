@@ -12,7 +12,7 @@ TodoList.stores(Todo)
 
 // Routes
 TodoList.get('/', function (request, response) {
-  TodoView.render().then(function (content) {
+  TodoView.render(function (err, content) {
     response.end(content)
   })
 })
