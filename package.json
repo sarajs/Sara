@@ -7,8 +7,7 @@
     "browserify": "~3.18.0",
     "engine.io": "~0.7.13",
     "jsdom": "~0.8.10",
-    "lodash": "~2.4.1",
-    "optimist": "~0.6.0"
+    "underscore": "~1.5.2"
   },
   "devDependencies": {
     "gulp": "~3.2.2",

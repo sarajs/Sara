@@ -1,5 +1,5 @@
 {
-  "name": "sara-angular-example",
+  "name": "sara-todo-example",
   "version": "0.0.1",
   "dependencies": {
     "sara-angular": "0.0.1"
