@@ -11,9 +11,10 @@ var TodoList = module.exports = new Sara({ env: 'development' })
 TodoList.stores(Todo)
 
 // Routes
-TodoList.get('/', function (request, response) {
+TodoList.get(['/', '/about'], function (req, res) {
+  console.log(TodoView)
   TodoView.render(function (err, content) {
-    response.end(content)
+    res.end(content)
   })
 })
 
