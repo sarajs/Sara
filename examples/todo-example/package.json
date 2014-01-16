@@ -2,6 +2,7 @@
   "name": "sara-todo-example",
   "version": "0.0.1",
   "dependencies": {
-    "sara-angular": "0.0.1"
+    "sara-angular": "0.0.1",
+    "rivets": "~0.6.5"
   }
 }

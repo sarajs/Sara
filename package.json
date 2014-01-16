@@ -31,12 +31,14 @@
     "url": "git://github.com/JacksonGariety/Sara.git"
   },
   "keywords": [
-    "node",
-    "server",
+    "framework",
+    "javascript",
     "isomorphic",
+    "node.js",
+    "server",
     "seo",
     "prerender",
-    "nodejs"
+    "client"
   ],
   "author": "Jackson Gariety",
   "license": "BSD-2-Clause",
