@@ -8,10 +8,10 @@ var Todo = module.exports = new Sara.Model('Todo', {
 
 // Active todos
 Todo.add(function active() {
-  return this.where({ 'completed': false })
+  return this.where({ completed: false })
 })
 
 // Completed todos
 Todo.add(function completed() {
-  return this.where({ 'completed': true })
+  return this.where({ completed: true })
 })
