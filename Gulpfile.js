@@ -41,8 +41,8 @@ gulp.task('test', function () {
 gulp.task('develop', function () {
   var nodemon = require('gulp-nodemon')
 
-  gulp.src('./examples/todo-example/app.js')
-    .pipe(nodemon())
+  nodemon({ script: './examples/todo-example/app.js' })
+    .on('restart', 'lint')
 })
 
 /**

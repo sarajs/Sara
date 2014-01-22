@@ -10,23 +10,22 @@ var TodoList = module.exports = new Sara({
   env: 'development'
 , template: '<html>'
           + '<head>'
-          + '  <script>window.onerror = console.error</script>'
-          + '  <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>'
-          + '  <script src="http://www.rivetsjs.com/dist/rivets.min.js"></script>'
+          + '  <style>.done{text-decoration:line-through;color:#AAA;}</style>'
           + '  <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>'
+          + '  <script src="http://www.rivetsjs.com/dist/rivets.min.js"></script>'
           + '  <script src="/index.js"></script>'
           + '</head>'
           + '<main>'
-          + '  <input rv-on-keypress="model.add">'
-          + '  <ul>'
-          + '    <li rv-each-todo="model.all" rv-class-done="todo.completed">'
+          + '  <input rv-on-keypress="add">'
+          + '  <ol>'
+          + '    <li rv-each-todo="all" rv-class-done="todo.completed">'
           + '      <input type="checkbox" rv-checked="todo.completed" rv-id="todo.id">'
           + '      <label rv-for="todo.id">{ todo.title }</label>'
           + '    </li>'
-          + '  </ul>'
-          + '  <p>{ model.remaining } remaining</p>'
+          + '  </ol>'
+          + '  <p>{ remaining } remaining</p>'
           + '  <section>'
-          + '    <button rv-on-click="model.hide">Hide Completed</button>'
+          + '    <button rv-on-click="hide">Hide Completed</button>'
           + '  </section>'
           + '</main></html>'
 })
@@ -41,33 +40,32 @@ new Todo({ title: 'Build your own Sara.js app', completed: false }).save()
 
 // Routes
 TodoList.get('/', function (req, res, window) {
-  if (process.browser) {
-    var model = {
-          all: Todo.all()
-        , remaining: 1
-        , add: function (event) {
-            if (event.keyCode === 13) {
-              var title = document.querySelector('input').value
+  var controller = {
+        all: Todo.all()
+      , remaining: Todo.active().length
+      , add: function (event) {
+          if (event.keyCode === 13) {
+            var title = document.querySelector('input').value
+            if (title) {
+              new Todo({ title: title, completed: false }).save()
               document.querySelector('input').value = ''
-              this.all.push({ id: Math.random(), title: title, completed: false })
             }
-            this.remaining = this.all.length
-          }
-        , hide: function () {
-            var that = this
-            this.all.forEach(function (todo) {
-              if (todo.completed == true) that.all.splice(that.all.indexOf(todo), 1)
-            })
-            this.remaining = this.all.length
+            this.remaining = Todo.active().length
           }
         }
+      , hide: function () {
+          Todo.completed().forEach(function (todo) {
+            todo.destroy()
+          })
+          this.remaining = Todo.active().length
+        }
+      }
 
-    _.bindAll(model, 'add', 'hide')
+  if (global.view) global.view.unbind()
 
-    window.rivets.bind(window.document.querySelector('main'), {
-      model: model
-    })
-  }
+  _.bindAll(controller, 'add', 'hide')
+
+  global.view = window.rivets.bind(window.document.querySelector('main'), controller)
 
   res.end(TodoList.template)
 })
@@ -78,6 +76,6 @@ TodoList.get('/about', function (req, res, window) {
 })
 
 // DOM Ready
-window.onload = function () {
+window.addEventListener('load', function () {
   TodoList.initialize()
-}
+})
