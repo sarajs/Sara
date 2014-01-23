@@ -30,7 +30,6 @@ button {
   cursor: pointer;
 }
 
-[visit] {
-  cursor: pointer;
-  text-decoration: underline;
+ol {
+  padding-left: 1.5em;
 }
