@@ -37,8 +37,6 @@ TodoList.get('/', function (req, res) {
 
 TodoList.post('/new', function (req, res) {
   res.writeHead(201)
-
-
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
   res.end(window.document.innerHTML)
 })
