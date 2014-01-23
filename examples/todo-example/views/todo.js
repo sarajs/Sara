@@ -4,12 +4,11 @@
  *
  */
 
-var React = require('react/addons')
+var React = require('react')
+  , Todo = require('../models/todo')
 
 var TodoView = module.exports = React.createClass({
-  mixins: [React.addons.LinkedStateMixin]
-
-, getInitialState: function () {
+  getInitialState: function () {
     return {
       completed: this.props.completed
     }
@@ -17,16 +16,17 @@ var TodoView = module.exports = React.createClass({
 
 , handleChange: function (e) {
     this.setState({ completed: e.target.checked })
+    Todo.find(this.props.id).set('completed', e.target.checked)
   }
 
 , render: function () {
     with (React.DOM) return (
       li({},
          label({ className: this.state.completed ? 'done' : null },
-          input({ checked: this.state.completed, type: "checkbox", id: this.props.id, onChange: this.handleChange }),
-          span({}, this.props.title)
+               input({ checked: this.state.completed, type: "checkbox", id: this.props.id, onChange: this.handleChange }),
+               span({}, this.props.title)
+              )
         )
-      )
     )
   }
 })

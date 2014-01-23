@@ -11,25 +11,6 @@ label.done {
   color: grey;
 }
 
-input, button {
-  border: 1px solid #CCC;
-  outline: none;
-  padding: 3px;
-  background-color: #FFF;
-}
-
-button:hover {
-  border-color: #DDD;
-}
-
-input:focus, button:active {
-  border-color: #999;
-}
-
-button {
-  cursor: pointer;
-}
-
 ol {
   padding-left: 1.5em;
 }

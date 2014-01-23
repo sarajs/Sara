@@ -8,6 +8,19 @@ exports.create = function (view) {
     view.setState({
       items: Todo.all()
     , text: ''
+    , remaining: Todo.active().length
     })
   }
+}
+
+exports.clear = function (view) {
+  Todo.completed().forEach(function (todo) {
+    todo.destroy()
+  })
+
+  view.setState({
+    items: Todo.all()
+  , text: ''
+  , remaining: Todo.active().length
+  })
 }

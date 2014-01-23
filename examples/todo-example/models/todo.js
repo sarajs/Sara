@@ -2,8 +2,8 @@ var Sara = require('sara')
 
 // The todo model
 var Todo = module.exports = new Sara.Model('Todo', {
-  title: String
-, completed: Boolean
+  title: ''
+, completed: false
 })
 
 // Active todos

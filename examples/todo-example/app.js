@@ -29,7 +29,7 @@ new Todo({ title: 'Build your own Sara app', completed: false }).save()
 
 // Routes
 TodoList.get('/', function (req, res) {
-  React.renderComponent(ListView({ items: Todo.all() }), document.body)
+  React.renderComponent(ListView({ items: Todo.all(), remaining: Todo.active().length }), document.body)
 
   res.writeHead(200)
   res.end(window.document.innerHTML)
