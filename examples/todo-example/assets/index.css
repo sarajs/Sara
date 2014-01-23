@@ -6,7 +6,7 @@ label {
   -webkit-user-select: none;
 }
 
-label.completed {
+label.done {
   text-decoration: line-through;
   color: grey;
 }

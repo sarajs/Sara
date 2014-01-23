@@ -1,28 +1,13 @@
 var Sara = require('sara')
+  , Todo = require('../models/todo')
 
-module.exports = new Sara.Controller('TodoController', 'TodoList', function TodoController($scope, $location) {
-  var Todo = require('../models/todo')
+exports.create = function (view) {
+  if (view.state.text) {
+    new Todo({ title: view.state.text }).save()
 
-  $scope.Todo = Todo
- 
-  $scope.new = function () {
-    if ($scope.title) {
-      new Todo({ title: $scope.title, completed: false }).save()
-      $scope.title = ''
-    }
-  }
-  
-  $scope.archive = function () {
-    Todo.completed().forEach(function (todo) {
-      todo.destroy()
+    view.setState({
+      items: Todo.all()
+    , text: ''
     })
   }
-
-  // Hide prerendered HTML
-  /* $scope.$evalAsync(function () {
-    var prerendered = document.querySelectorAll("[data-prerendered]")
-    for (var i = prerendered.length; i--;) {
-      prerendered[i].parentNode.removeChild(prerendered[i])
-    }
-  }) */
-})
+}
