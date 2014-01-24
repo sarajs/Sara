@@ -23,6 +23,12 @@ How about a todo list app with...
 
 See [the sara-angular example](https://github.com/JacksonGariety/Sara/tree/master/examples/sara-angular-example).
 
+## Antipatterns
+
+Due to the originality of Sara's client/server realtionship, there are a few "gotchas" when building apps with her.
+
+1. NEVER include inline nor external scripts in your templates. All logic should be `require()`'d from within your Sara app.
+
 ## Development
 
 To start the example app from a clone of this repo:
