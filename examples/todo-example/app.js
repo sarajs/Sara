@@ -32,20 +32,20 @@ TodoList.get('/', function (req, res) {
   React.renderComponent(ListView({ items: Todo.all(), remaining: Todo.active().length }), document.body)
 
   res.writeHead(200)
-  res.end(window.document.innerHTML)
+  res.end(document.innerHTML)
 })
 
 TodoList.post('/new', function (req, res) {
   res.writeHead(201)
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
-  res.end(window.document.innerHTML)
+  res.end(document.innerHTML)
 })
 
 TodoList.get('/about', function (req, res) {
-  window.document.body.innerHTML = 'things about this todo app'
+  document.body.innerHTML = 'things about this todo app'
 
   res.writeHead(200)
-  res.end(window.document.documentElement.outerHTML)
+  res.end(document.documentElement.outerHTML)
 })
 
 // DOM Ready
