@@ -39,22 +39,22 @@ var ListView = module.exports = React.createClass({
 
 , render: function () {
     with (React.DOM) return (
-      div({},
-           header({},
-                  h2({}, 'Todo List'),
-                  span({}, Todo.active().length + ' remaining'),
-                  button({ onClick: this.handleClick }, 'Clear')
-                 ),
-           main({},
-                ol({},
-                   this.state.items.map(function(item) {
-                     item.key = item.id
-                     return TodoView(item)
-                   })
-                  ),
-                form({ onSubmit: this.handleSubmit , method: 'POST', action: '/new' },
-                     input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text }),
-                     button(null, 'Add #' + (this.state.items.length + 1))
+      div({}
+         , header({}
+                 , h2({}, 'Todo List')
+                 , span({}, Todo.completed().length + ' completed')
+                 , button({ onClick: this.handleClick }, 'Clear')
+                 )
+         ,  main({}
+                , ol({}
+                    , this.state.items.map(function(item) {
+                        item.key = item.id
+                        return TodoView(item)
+                      })
+                    )
+                , form({ onSubmit: this.handleSubmit , method: 'POST', action: '/new' }
+                      , input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
+                      , button(null, 'Add #' + (this.state.items.length + 1))
                     )
                )
           )

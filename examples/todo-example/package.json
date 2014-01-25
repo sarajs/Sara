@@ -2,8 +2,6 @@
   "name": "sara-todo-example",
   "version": "0.0.1",
   "dependencies": {
-    "rivets": "git://github.com/adjohnson916/rivets#8056f2134a3e22",
-    "envify": "~0.2.0",
     "react": "~0.8.0"
   }
 }
