@@ -4,11 +4,12 @@
   "main": "./lib/sara.js",
   "dependencies": {
     "connect": "2.12.0",
-    "browserify": "~3.19.1",
+    "browserify": "~3.24.1",
     "engine.io": "~0.8.2",
     "engine.io-client": "~0.8.2",
-    "jsdom": "0.8.10",
-    "lodash": "~2.4.1"
+    "jsdom": "0.8.11",
+    "lodash": "~2.4.1",
+    "nedb": "~0.9.4"
   },
   "devDependencies": {
     "gulp": "3.2.4",
