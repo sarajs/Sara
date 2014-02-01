@@ -69,7 +69,7 @@ var ListView = module.exports = React.createClass({
                       })
                     )
                 , form({ onSubmit: this.handleSubmit , method: 'POST', action: '/new' }
-                      , input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
+                      , input({ type: 'text', onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
                       , button(null, 'Add #' + (this.state.items.length + 1))
                     )
                )
