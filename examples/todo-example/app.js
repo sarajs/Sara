@@ -22,6 +22,8 @@ var TodoList = module.exports = new Sara({
 // Storage
 TodoList.stores(Todo)
 
+var flag = true
+
 // Routes
 TodoList.get('/', function (req, res) {
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
