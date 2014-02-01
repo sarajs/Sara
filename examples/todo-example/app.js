@@ -32,6 +32,7 @@ TodoList.stores(Todo)
 // Routes
 TodoList.get('/', function (req, res) {
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
+
   res.writeHead(200)
   res.end(document.innerHTML)
 })
