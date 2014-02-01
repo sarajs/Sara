@@ -6,8 +6,6 @@ var Sara = require('sara') // .adapter(require('sara-angular'))
   , TodoView = require('./views/todo')
   , _ = require('lodash')
   , React = require('react')
-  , $ = require('jquery')
-  , bean = require('bean')
 
 // Our app
 var TodoList = module.exports = new Sara({
@@ -24,15 +22,9 @@ var TodoList = module.exports = new Sara({
 // Storage
 TodoList.stores(Todo)
 
-// The next 3 lines are just for testing the client-server synchronization.
-// setInterval(function () {
-//   console.log(Todo.completed().length)
-// }, 2000)
-
 // Routes
 TodoList.get('/', function (req, res) {
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
-
   res.writeHead(200)
   res.end(document.innerHTML)
 })

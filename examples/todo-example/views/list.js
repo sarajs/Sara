@@ -45,7 +45,6 @@ var ListView = module.exports = React.createClass({
   }
 
 , handleSubmit: function (e) {
-    console.log('FOOBA')
     e.preventDefault()
     TodoController.create(this)
   }
