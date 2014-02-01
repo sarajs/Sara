@@ -9,7 +9,9 @@
     "engine.io-client": "~0.8.2",
     "jsdom": "0.8.11",
     "lodash": "~2.4.1",
-    "nedb": "~0.9.4"
+    "nedb": "~0.9.4",
+    "json-stringify-safe": "~5.0.0",
+    "circular-json": "~0.1.5"
   },
   "devDependencies": {
     "gulp": "3.2.4",

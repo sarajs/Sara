@@ -4,17 +4,33 @@ var Sara = require('sara')
   , TodoView = require('./todo')
   , React = require('react')
 
+window.Todo = Todo
+
 var ListView = module.exports = React.createClass({
-  componentDidMount: function () {
-    this.props.items.forEach(function(todo) {
-      todo.on('add change remove', this.forceUpdate.bind(this, null), this)
-    }, this)
+  _subscribe: function (model) {
+    if (!model) return
+    if (model instanceof Array) model.on('add remove reset sort', this.forceUpdate.bind(this), this);
+    else model.on('change', (this.onModelChange || this.forceUpdate.bind(this, null)), this)
   }
 
-, componentWillUnmount: function () {
-    this.props.items.forEach(function(todo) {
-      todo.off(null, null, this)
-    }, this)
+, _unsubscribe: function (model) {
+    if (!model) return
+    model.off(null, null, this)
+  }
+
+, componentDidMount: function () {
+    this._subscribe(this.props.items)
+  }
+
+, componentWillReceiveProps: function (nextProps) {
+    if (this.props.items !== nextProps.model) {
+      this._unsubscribe(this.props.items)
+      this._subscribe(nextProps.items)
+    }
+  }
+
+, componentWillUnmount: function() {
+    this._unsubscribe(this.props.items)
   }
 
 , getInitialState: function() {

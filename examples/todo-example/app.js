@@ -29,17 +29,9 @@ TodoList.stores(Todo)
 //   console.log(Todo.completed().length)
 // }, 2000)
 
-// Data for testing
-new Todo({ title: 'Play with the example', completed: true }).save()
-new Todo({ title: 'Read the guide', completed: false }).save()
-new Todo({ title: 'Build your own Sara app', completed: false }).save()
-
 // Routes
 TodoList.get('/', function (req, res) {
   React.renderComponent(ListView({ items: Todo.all() }), document.body)
-
-  window.$ = $
-
   res.writeHead(200)
   res.end(document.innerHTML)
 })
