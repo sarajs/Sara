@@ -4,18 +4,18 @@ var Sara = require('sara')
   , TodoView = require('./todo')
   , React = require('react')
 
-window.Todo = Todo
-
 var ListView = module.exports = React.createClass({
   _subscribe: function (model) {
     if (!model) return
-    if (model instanceof Array) model.on('add remove reset sort', this.forceUpdate.bind(this), this);
-    else model.on('change', (this.onModelChange || this.forceUpdate.bind(this, null)), this)
+    model.on('add remove reset sort changeAny', this.forceUpdate.bind(this), this)
   }
 
 , _unsubscribe: function (model) {
     if (!model) return
     model.off(null, null, this)
+    model.forEach(function (model) {
+                    model.off(null, null, this)
+                  }.bind(this))
   }
 
 , componentDidMount: function () {
@@ -55,25 +55,21 @@ var ListView = module.exports = React.createClass({
 
 , render: function () {
     with (React.DOM) return (
-      div({}
-         , header({}
-                 , h2({}, 'Todo List')
-                 , span({}, Todo.completed().length + ' completed')
-                 , button({ onClick: this.handleClick }, 'Clear')
-                 )
-         ,  main({}
-                , ol({}
-                    , this.state.items.map(function(item) {
-                        item.key = item.id
-                        return TodoView(item)
-                      })
-                    )
-                , form({ onSubmit: this.handleSubmit , method: 'POST', action: '/new' }
-                      , input({ type: 'text', onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
-                      , button(null, 'Add #' + (this.state.items.length + 1))
-                    )
+      div({},
+          span({}, Todo.completed().length + ' completed')
+         , button({ onClick: this.handleClick }, 'Clear')
+
+         , ol({}
+             , this.state.items.map(function(item) {
+                 item.key = item.id
+                 return TodoView(item)
+               })
+             )
+         , form({ type: 'text', onSubmit: this.handleSubmit , method: 'POST', action: '/new' }
+               , input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
+               , button(null, 'Add #' + (this.state.items.length + 1))
                )
-          )
+         )
     )
   }
 })

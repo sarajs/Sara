@@ -11,7 +11,8 @@
     "lodash": "~2.4.1",
     "nedb": "~0.9.4",
     "json-stringify-safe": "~5.0.0",
-    "circular-json": "~0.1.5"
+    "circular-json": "~0.1.5",
+    "domready": "~0.2.13"
   },
   "devDependencies": {
     "gulp": "3.2.4",

@@ -4,6 +4,7 @@ var Sara = require('sara') // .adapter(require('sara-angular'))
   , TodoController = require('./controllers/todo')
   , ListView = require('./views/list')
   , TodoView = require('./views/todo')
+  , AboutView = require('./views/about')
   , _ = require('lodash')
   , React = require('react')
 
@@ -15,6 +16,15 @@ var TodoList = module.exports = new Sara({
           + '  <style>body { font-family: Helvetica; } label { -webkit-user-select: none; } label.done { text-decoration: line-through; color: grey; } ol { padding-left: 1.5em; }</style>'
           + '  </head>'
           + '  <body>'
+          + '    <header>'
+          + '      <h2>Todo List</h2>'
+          + '      <nav>'
+          + '        <a href="/">todos</a>'
+          + '        <a href="/about">about</a>'
+          + '      </nav>'
+          + '      <br>'
+          + '    </header>'
+          + '    <main></main>'
           + '  </body>'
           + '</html>'
 })
@@ -22,28 +32,24 @@ var TodoList = module.exports = new Sara({
 // Storage
 TodoList.stores(Todo)
 
-var flag = true
-
 // Routes
-TodoList.get('/', function (req, res) {
-  React.renderComponent(ListView({ items: Todo.all() }), document.body)
+TodoList.get('/', function (req, res, window) {
+  React.renderComponent(ListView({ items: Todo.all() }), window.document.querySelector('main'))
   res.writeHead(200)
-  res.end(document.innerHTML)
+  res.end(window.document.innerHTML)
 })
 
-TodoList.post('/new', function (req, res) {
-  React.renderComponent(ListView({ items: Todo.all() }), document.body)
+TodoList.post('/new', function (req, res, window) {
+  React.renderComponent(ListView({ items: Todo.all() }), window.document.querySelector('main'))
   res.writeHead(201)
-  res.end(document.innerHTML)
+  res.end(window.document.innerHTML)
 })
 
-TodoList.get('/about', function (req, res) {
-  document.body.innerHTML = 'things about this todo app'
+TodoList.get('/about', function (req, res, window) {
+  React.renderComponent(AboutView(), window.document.querySelector('main'))
   res.writeHead(200)
-  res.end(document.documentElement.outerHTML)
+  res.end(window.document.documentElement.outerHTML)
 })
 
-// DOM Ready
-window.addEventListener('load', function () {
-  TodoList.initialize()
-})
+// Start the router
+TodoList.initialize()
