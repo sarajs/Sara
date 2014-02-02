@@ -7,7 +7,7 @@
     "browserify": "~3.24.1",
     "engine.io": "~0.8.2",
     "engine.io-client": "~0.8.2",
-    "jsdom": "0.8.11",
+    "jsdom": "http://github.com/sarajs/jsdom/tarball/master",
     "lodash": "~2.4.1",
     "nedb": "~0.9.4",
     "json-stringify-safe": "~5.0.0",
