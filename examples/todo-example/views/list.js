@@ -47,7 +47,7 @@ var ListView = module.exports = React.createClass({
 
          , ol({}
              , this.props.items.map(function(item) {
-                 item.key = item.id
+                 item.key = item.id()
                  return TodoView(item)
                })
              )
