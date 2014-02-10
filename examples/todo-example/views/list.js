@@ -12,8 +12,8 @@ var ListView = module.exports = React.createClass({
     if (!model) return
     model.off(null, null, this)
     model.forEach(function (model) {
-                    model.off(null, null, this)
-                  }.bind(this))
+      model.off(null, null, this)
+    }.bind(this))
   }
 
 , componentDidMount: function () {

@@ -14,4 +14,8 @@ var TodoController = module.exports = new Sara.Controller({
     todo.destroy()
   })
 
+}).action(function toggleChecked(e) {
+
+  Todo.find(this.props.id).set('completed', e.target.checked)
+
 })
