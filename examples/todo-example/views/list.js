@@ -31,41 +31,29 @@ var ListView = module.exports = React.createClass({
     this._unsubscribe(this.props.items)
   }
 
-, getInitialState: function() {
-    return {
-      items: this.props.items || []
-    , text: ''
-    }
+, getInitialState: function () {
+    return { text: '' }
   }
 
 , handleChange: function (e) {
     this.setState({ text: e.target.value })
   }
 
-, handleSubmit: function (e) {
-    e.preventDefault()
-    TodoController.create(this)
-  }
-
-, handleClick: function (e) {
-    TodoController.clear(this)
-  }
-
 , render: function () {
     with (React.DOM) return (
       div({},
           span({}, Todo.completed().length + ' completed')
-         , button({ onClick: this.handleClick }, 'Clear')
+         , button({ onClick: TodoController.clear.bind(this) }, 'Clear')
 
          , ol({}
-             , this.state.items.map(function(item) {
+             , this.props.items.map(function(item) {
                  item.key = item.id
                  return TodoView(item)
                })
              )
-         , form({ type: 'text', onSubmit: this.handleSubmit , method: 'POST', action: '/new' }
+         , form({ type: 'text', onSubmit: TodoController.create.bind(this), method: 'POST', action: '/new' }
                , input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
-               , button(null, 'Add #' + (this.state.items.length + 1))
+               , button(null, 'Add #' + (this.props.items.length + 1))
                )
          )
     )

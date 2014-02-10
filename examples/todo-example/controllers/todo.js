@@ -1,15 +1,17 @@
 var Sara = require('sara')
   , Todo = require('../models/todo')
 
-var TodoController = module.exports = new Sara.Controller()
+var TodoController = module.exports = new Sara.Controller({
 
-TodoController.action(function create(view) {
-  if (view.state.text) new Todo({ title: view.state.text }).save()
-  view.state.text = ''
-})
+}).action(function create() {
 
-TodoController.action(function clear(view) {
+  if (this.state.text) new Todo({ title: this.state.text }).save()
+  this.state.text = ''
+
+}).action(function clear() {
+
   Todo.completed().forEach(function (todo) {
     todo.destroy()
   })
+
 })
