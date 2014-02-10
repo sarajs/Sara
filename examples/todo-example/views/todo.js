@@ -5,7 +5,6 @@
  */
 
 var React = require('react')
-  , Todo = require('../models/todo')
 
 var TodoView = module.exports = React.createClass({
   getInitialState: function () {

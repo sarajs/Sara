@@ -1,6 +1,4 @@
 var Sara = require('sara')
-  , Todo = require('../models/todo')
-  , TodoController = require('../controllers/todo')
   , TodoView = require('./todo')
   , React = require('react')
 

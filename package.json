@@ -14,7 +14,8 @@
     "circular-json": "~0.1.5",
     "domready": "~0.2.13",
     "contextify": "~0.1.6",
-    "require-like": "~0.1.2"
+    "require-like": "~0.1.2",
+    "through": "~2.3.4"
   },
   "devDependencies": {
     "gulp": "3.2.4",
