@@ -9,12 +9,12 @@ var TodoList = module.exports = new Sara()
       , TodoView = require('./views/todo')
       , AboutView = require('./views/about')
 
-    this.paths({
-      '/': function (req, res) {
-        TodoView.render(Todo.all(), res)
+    this.routes({
+      '/': function () {
+        return TodoView.render(Todo.all())
       }
     , '/about': function () {
-        AboutView.render()
+        return AboutView.render()
       }
     })
   })
