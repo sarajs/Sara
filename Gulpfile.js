@@ -4,7 +4,6 @@ var gulp = require('gulp')
 /**
  * LINT WITH JSHINT
  */
-
 gulp.task('lint', function() {
   var jshint = require('gulp-jshint')
     , linter = jshint({
@@ -26,7 +25,6 @@ gulp.task('lint', function() {
 /**
  * TEST WITH MOCHA
  */
-
 gulp.task('test', function () {
   var mocha = require('gulp-mocha')
 
@@ -37,16 +35,14 @@ gulp.task('test', function () {
 /**
  * RUN WITH NODEMON
  */
-
 gulp.task('develop', function () {
   var nodemon = require('gulp-nodemon')
 
-  nodemon({ script: './examples/todo-example/app.js' })
+  nodemon({ script: './examples/handlebars-example' })
     .on('restart', 'lint')
 })
 
 /**
  * DEFAULT
  */
-
 gulp.task('default', ['lint', 'develop'])

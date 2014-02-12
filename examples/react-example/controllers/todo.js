@@ -3,17 +3,26 @@ var Sara = require('sara')
 
 var TodoController = module.exports = new Sara.Controller({
 
-}).action(function create() {
+/**
+ * CREATE
+ */
+}).action(function create(e) {
 
   if (this.state.text) new Todo({ title: this.state.text }).save()
   this.state.text = ''
 
-}).action(function clear() {
+/**
+ * CLEAR
+ */
+}).action(function clear(e) {
 
   Todo.completed().forEach(function (todo) {
     todo.destroy()
   })
 
+/**
+ * TOGGLE
+ */
 }).action(function toggleChecked(e) {
 
   Todo.find(this.props.key).set('completed', e.target.checked)

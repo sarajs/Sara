@@ -1,0 +1,14 @@
+<ol>
+  {{#each this}}
+    <li>
+      <label>
+        <input type="checkbox" {{#if checked}} checked {{/if}} />
+        {{title}}
+      </label>
+    </li>
+  {{/each}}
+</ol>
+<form>
+  <input type="text" />
+  <button>Add</button>
+</form>
