@@ -1,7 +1,7 @@
 var TodoList = require('../index')
 
 var TodoView = module.exports = new TodoList.View('Todo', {
-  template: '../templates/todo.html'
+  template: TodoList.template('todo', '../templates/todo.html')
 , element: 'body'
 , render: function (data) {
     var Handlebars = require('handlebars')
