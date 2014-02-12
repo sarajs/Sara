@@ -8,6 +8,7 @@ var TodoList = module.exports = new Sara()
     var Todo = require('./models/todo')
       , TodoView = require('./views/todo')
       , AboutView = require('./views/about')
+      , TodoController = require('./controllers/todo')
 
     this.routes({
       '/': function () {
