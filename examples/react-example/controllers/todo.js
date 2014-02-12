@@ -1,15 +1,15 @@
-var Sara = require('sara')
+var TodoList = require('../app')
   , Todo = require('../models/todo')
 
-var TodoController = module.exports = new Sara.Controller({
+var TodoController = module.exports = new Sara.Controller()
 
 /**
  * CREATE
  */
-}).action(function create(e) {
+TodoController.action(function create(e) {
 
   if (this.state.text) new Todo({ title: this.state.text }).save()
-  this.state.text = ''
+  this.setState({ text: '' })
 
 /**
  * CLEAR

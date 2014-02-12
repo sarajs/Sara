@@ -2,7 +2,7 @@
   {{#each this}}
     <li>
       <label>
-        <input type="checkbox" {{#if checked}} checked {{/if}} />
+        <input type="checkbox" id={{key}} {{#if completed}}checked{{/if}} />
         {{title}}
       </label>
     </li>

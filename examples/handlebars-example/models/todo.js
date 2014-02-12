@@ -1,4 +1,4 @@
-var TodoList = require('../index')
+var TodoList = require('../app')
 
 var Todo = module.exports = new TodoList.Model('Todo', {
   title: ''

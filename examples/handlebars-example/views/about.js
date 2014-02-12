@@ -1,4 +1,4 @@
-var TodoList = require('../index')
+var TodoList = require('../app')
 
 var AboutView = module.exports = new TodoList.View('Todo', {
   element: 'main'
