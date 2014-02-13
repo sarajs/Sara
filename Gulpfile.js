@@ -38,7 +38,7 @@ gulp.task('test', function () {
 gulp.task('develop', function () {
   var nodemon = require('gulp-nodemon')
 
-  nodemon({ script: './examples/handlebars-example/app', options: '-e html,js' })
+  nodemon({ script: './examples/mustache-example/app', options: '-e html,js' })
     .on('restart', 'lint')
 })
 

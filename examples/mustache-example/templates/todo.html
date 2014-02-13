@@ -1,0 +1,15 @@
+<div>{{completed.length}} completed <button>Clear</button></div>
+<ol>
+  {{#todos}}
+    <li>
+      <label>
+        <input type="checkbox" id="{{key}}" {{#completed}}checked{{/completed}} />
+        {{title}}
+      </label>
+    </li>
+  {{/todos}}
+</ol>
+<form method="GET" action="/new">
+  <input type="text" />
+  <button>Add</button>
+</form>
