@@ -1,30 +1,25 @@
 var TodoList = require('../app')
   ,  Mustache = require('mustache')
   , TodoController = require('../controllers/todo')
-  , _ = require('../../../lib/sara').Utils
   , Todo = require('../models/todo')
+  , $ = require('jquery')
 
 var TodoView = module.exports = new TodoList.View('Todo', {
   template: TodoList.template('todo', '../templates/todo.html')
 , render: function (document) {
-    Todo.all().on('add remove changeAny', render.bind(this))
-    render.bind(this)()
-
     function render() {
-      Todo.all().forEach(function (todo) {
-        todo.key = todo.id()
-      })
+      $(document).find('main').html(Mustache.render(this.template.toString(), { todos: Todo.all(), completed: Todo.completed() }))
 
-      // render
-      document.querySelector('main').innerHTML = Mustache.render(this.template.toString(), { todos: Todo.all(), completed: Todo.completed() })
-
-      // events
-      document.querySelector('div button').onclick = TodoController.clear
-      document.querySelector('form').onsubmit = TodoController.create
-
-      _(document.querySelectorAll('input[type="checkbox"]')).forEach(function (input) {
-        input.onclick = TodoController.toggleChecked
-      })
+      with (TodoController) {
+        $(document).find('div button').click(clear)
+        $(document).find('form').submit(create)
+        $(document).find('input[type="checkbox"]').click(toggleChecked)
+      }
+      
+      return render.bind(this)
     }
+
+
+    Todo.all().on('add remove changeAny', render.call(this))
   }
 })

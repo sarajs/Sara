@@ -1,7 +1,8 @@
 var TodoList = require('../app')
+  , $ = require('jquery')
 
 var AboutView = module.exports = new TodoList.View('Todo', {
   render: function (document) {
-    document.querySelector('main').innerHTML = 'About my app.'
+    $(document).find('main').html('About my app.')
   }
 })
