@@ -15,7 +15,8 @@
     "domready": "~0.2.13",
     "contextify": "~0.1.6",
     "require-like": "~0.1.2",
-    "through": "~2.3.4"
+    "through": "~2.3.4",
+    "mongodb": "~1.3.23"
   },
   "devDependencies": {
     "gulp": "3.2.4",

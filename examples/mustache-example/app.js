@@ -3,6 +3,7 @@ var Sara = require('../../lib/sara')
 
 // Our app
 var TodoList = module.exports = new Sara()
+  .storage(require('../../lib/adapters/mongodb'))
   .layout('./templates/layout.html')
   .initialize(function () {
     var Todo = require('./models/todo')

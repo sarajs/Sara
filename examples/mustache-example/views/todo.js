@@ -1,13 +1,12 @@
 var TodoList = require('../app')
+  ,  Mustache = require('mustache')
+  , TodoController = require('../controllers/todo')
+  , _ = require('../../../lib/sara').Utils
+  , Todo = require('../models/todo')
 
 var TodoView = module.exports = new TodoList.View('Todo', {
   template: TodoList.template('todo', '../templates/todo.html')
 , render: function (document) {
-    var Mustache = require('mustache')
-      , TodoController = require('../controllers/todo')
-      , _ = require('../../../lib/sara').Utils
-      , Todo = require('../models/todo')
-
     Todo.all().on('add remove changeAny', render.bind(this))
     render.bind(this)()
 
