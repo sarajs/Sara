@@ -18,9 +18,7 @@ var TodoController = module.exports = new TodoList.Controller()
  * CLEAR
  */
 .action(function clear(e) {
-  Todo.completed().forEach(function (todo) {
-    todo.destroy()
-  })
+  Todo.read('completed').pipe(Todo.write('destroy'))
 })
 
 /**
