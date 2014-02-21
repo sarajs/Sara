@@ -1,11 +1,11 @@
-var TodoList = require('../app')
-  ,  Mustache = require('mustache')
+var Sara = require('sara')
+  , Mustache = require('mustache')
   , TodoController = require('../controllers/todo')
   , Todo = require('../models/todo')
   , $ = require('jquery')
 
-var TodoView = module.exports = new TodoList.View('Todo', {
-  template: TodoList.template('todo', '../templates/todo.html')
+var TodoView = module.exports = new Sara.View('Todo', {
+  template: Sara.template('todo', '../templates/todo.html')
 , render: function (document) {
     function render() {
       $(document).find('main').html(Mustache.render(this.template.toString(), { todos: Todo.all(), completed: Todo.completed() }))

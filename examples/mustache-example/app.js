@@ -1,27 +1,21 @@
 // Modules
-var Sara = require('../../lib/sara')
+var App = require('sara')
+  , Todo = require('./models/todo')
+  , TodoView = require('./views/todo')
+  , AboutView = require('./views/about')
+  , TodoController = require('./controllers/todo')
 
-// Our app
-var TodoList = module.exports = new Sara()
+App.storage('todolist', require('../../lib/adapters/mongodb'))
 
-  .storage(require('../../lib/adapters/mongodb'))
+App.layout('./templates/layout.html')
 
-  .layout('./templates/layout.html')
+App.routes({
+  '/': function () {
+    return TodoView.render(Todo.all())
+  }
+, '/about': function () {
+    return AboutView.render()
+  }
+})
 
-  .initialize(function () {
-
-    var Todo = require('./models/todo')
-      , TodoView = require('./views/todo')
-      , AboutView = require('./views/about')
-      , TodoController = require('./controllers/todo')
-
-    this.routes({
-      '/': function () {
-        return TodoView.render(Todo.all())
-      }
-    , '/about': function () {
-        return AboutView.render()
-      }
-    })
-
-  })
+App.init({ env: 'development' })

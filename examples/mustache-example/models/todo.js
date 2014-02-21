@@ -1,6 +1,6 @@
-var TodoList = require('../app')
+var Sara = require('sara')
 
-var Todo = module.exports = new TodoList.Model('Todo', {
+var Todo = module.exports = new Sara.Model('Todo', {
   title: ''
 , completed: false
 })
