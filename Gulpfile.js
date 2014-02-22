@@ -1,5 +1,7 @@
 // Modules
 var gulp = require('gulp')
+  , mocha = require('gulp-mocha')
+  , nodemon = require('gulp-nodemon')
 
 /**
  * LINT WITH JSHINT
@@ -26,8 +28,6 @@ gulp.task('lint', function() {
  * TEST WITH MOCHA
  */
 gulp.task('test', function () {
-  var mocha = require('gulp-mocha')
-
   gulp.src('test/*-test.js')
     .pipe(mocha({ ui: 'bdd' }))
 })
@@ -36,9 +36,7 @@ gulp.task('test', function () {
  * RUN WITH NODEMON
  */
 gulp.task('develop', function () {
-  var nodemon = require('gulp-nodemon')
-
-  nodemon({ script: './examples/mustache-example/app', options: '-e html,js' })
+  nodemon({ script: './examples/mustache-example/app', ext: 'html js' })
     .on('restart', 'lint')
 })
 

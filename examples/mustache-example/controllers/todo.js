@@ -1,9 +1,9 @@
-var Sara = require('sara')
+var App = require('sara')
   , Todo = require('../models/todo')
 
 global.Todo = Todo
 
-var TodoController = module.exports = new Sara.Controller()
+var TodoController = module.exports = new App.Controller()
 
 /**
  * CREATE

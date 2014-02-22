@@ -1,6 +1,6 @@
-var Sara = require('sara')
+var App = require('sara')
 
-var Todo = module.exports = new Sara.Model('Todo', {
+var Todo = module.exports = new App.Model('Todo', {
   title: ''
 , completed: false
 })
