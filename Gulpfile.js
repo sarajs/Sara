@@ -2,6 +2,7 @@
 var gulp = require('gulp')
   , mocha = require('gulp-mocha')
   , nodemon = require('gulp-nodemon')
+  , soften = require('gulp-soften')
 
 /**
  * LINT WITH JSHINT
@@ -32,10 +33,16 @@ gulp.task('test', function () {
     .pipe(mocha({ ui: 'bdd' }))
 })
 
+gulp.task('soften', function () {
+  gulp.src('./lib/**/*.js')
+    .pipe(soften(2))
+    .pipe(gulp.dest('./lib'))
+})
+
 /**
  * RUN WITH NODEMON
  */
-gulp.task('develop', function () {
+gulp.task('develop', ['lint'], function () {
   nodemon({ script: './examples/mustache-example/app', ext: 'html js' })
     .on('restart', 'lint')
 })
