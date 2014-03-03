@@ -1,12 +1,8 @@
-var Sara = require('sara')
-  , React = require('react')
+var App = require('sara')
+  , $ = require('jquery')
 
-var AboutView = module.exports = React.createClass({
+var AboutView = module.exports = new App.View('About', {
   render: function () {
-    with (React.DOM) return (
-      div({},
-          span({}, "hi")
-         )
-    )
+    $('main').html('About my app.')
   }
 })

@@ -1,6 +1,8 @@
 var Sara = require('sara')
-  , TodoView = require('./todo')
   , React = require('react')
+  , TodoItem = require('./todo')
+  , Todo = require('../models/todo')
+  , TodoController = require('../controllers/todo')
 
 var ListView = module.exports = React.createClass({
   _subscribe: function (model) {
@@ -47,13 +49,13 @@ var ListView = module.exports = React.createClass({
 
          , ol({}
              , this.props.items.map(function(item) {
-                 item.key = item.id()
-                 return TodoView(item)
+                 item.key = item.id
+                 return TodoItem(item)
                })
              )
          , form({ type: 'text', onSubmit: TodoController.create.bind(this), method: 'POST', action: '/new' }
                , input({ onChange: this.handleChange, placeholder: 'Something to do.', value: this.state.text })
-               , button(null, 'Add #' + (this.props.items.length + 1))
+               , button(null, 'Add')
                )
          )
     )

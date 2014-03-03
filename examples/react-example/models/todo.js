@@ -1,17 +1,14 @@
-var Sara = require('sara')
+var App = require('sara')
 
-// The todo model
-var Todo = module.exports = new Sara.Model('Todo', {
+var Todo = module.exports = new App.Model('Todo', {
   title: ''
 , completed: false
 })
 
-// Active todos
-Todo.add(function active() {
+Todo.active = function () {
   return this.where({ completed: false })
-})
+}
 
-// Completed todos
-Todo.add(function completed() {
+Todo.completed =function completed() {
   return this.where({ completed: true })
-})
+}

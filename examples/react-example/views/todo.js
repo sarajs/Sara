@@ -1,20 +1,13 @@
-/*!
- *
- * The todo item component.
- *
- */
+var App = require('sara')
+  , List = require('../components/list')
+  , React = require('react')
+  , Todo = require('../models/todo')
 
-var React = require('react')
-
-var TodoView = module.exports = React.createClass({
-  render: function () {
-    with (React.DOM) return (
-      li({},
-         label({ className: this.props.completed ? 'done' : null },
-               input({ checked: this.props.completed, type: "checkbox", id: this.props.id, onChange: TodoController.toggleChecked.bind(this) }),
-               span({}, this.props.title)
-              )
-        )
-    )
+var TodoView = module.exports = new App.View('Todo', {
+  prerender: function (document) {
+    document.querySelector('main').innerHTML = React.renderComponentToString(List({ items: Todo.all() }))
+  }
+, render: function () {
+    React.renderComponent(List({ items: Todo.all() }), document.querySelector('main'))
   }
 })

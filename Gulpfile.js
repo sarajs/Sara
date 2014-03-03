@@ -43,9 +43,18 @@ gulp.task('soften', function () {
  * RUN WITH NODEMON
  */
 gulp.task('develop', ['lint'], function () {
+  nodemon({ script: './examples/react-example/app', ext: 'html js' })
+    .on('restart', 'lint')
+})
+
+/**
+ * RUN WITH NODEMON
+ */
+gulp.task('mustache', ['lint'], function () {
   nodemon({ script: './examples/mustache-example/app', ext: 'html js' })
     .on('restart', 'lint')
 })
+
 
 /**
  * DEFAULT

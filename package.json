@@ -13,7 +13,8 @@
     "uglify-js": "^2.4.12",
     "compression": "^1.0.0",
     "body-parser": "^1.0.0",
-    "browserify": "^3.31.2"
+    "browserify": "^3.31.2",
+    "contextify": "~0.1.6"
   },
   "devDependencies": {
     "gulp": "3.2.4",
