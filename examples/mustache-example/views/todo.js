@@ -7,9 +7,13 @@ var App = require('sara')
 var TodoView = module.exports = new App.View('Todo', {
   template: App.template('todo', '../templates/todo.html').toString()
 
-, render: function (todos) {
+, prerender: function () {
+    $('main').html('foobar')
+  }
+
+, render: function () {
     function render() {
-      $('main').html(Mustache.render(this.template, todos))
+      $('main').html(Mustache.render(this.template, { todos: Todo.all(), completed: Todo.completed() }))
 
       with (TodoController) {
         $(document).find('div button').click(clear)
