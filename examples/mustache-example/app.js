@@ -11,4 +11,5 @@ App.storage('todolist', require('../../lib/adapters/mongodb'))
     '/': TodoView.render
   , '/about': AboutView.render
   })
-  .init({ env: 'development' })
+  .init({ env: 'development' }, function () {
+  })
