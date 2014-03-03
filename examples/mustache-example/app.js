@@ -11,14 +11,14 @@ App.layout('./templates/layout.html')
 
 App.routes({
   '/': function () {
-    return TodoView.render(Todo.all())
+    return TodoView.render(Todo.all(), '/')
   }
 , '/new': function (req) {
     TodoController.create()
-    return AboutView.render()
+    return AboutView.render(null, '/new')
   }
 , '/about': function () {
-    return AboutView.render()
+    return AboutView.render(null, '/about')
   }
 })
 
