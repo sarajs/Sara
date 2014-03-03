@@ -4,17 +4,16 @@
   "main": "./lib/sara.js",
   "dependencies": {
     "connect": "2.12.0",
-    "browserify": "^3.31.2",
     "engine.io": "^0.8.2",
     "engine.io-client": "^0.8.2",
-    "jsdom": "http://github.com/sarajs/jsdom/tarball/master",
+    "jsdom": "^0.10.1",
     "lodash": "^2.4.1",
     "nedb": "^0.9.4",
-    "contextify": "^0.1.6",
     "mongodb": "^1.3.23",
     "uglify-js": "^2.4.12",
     "compression": "^1.0.0",
-    "body-parser": "^1.0.0"
+    "body-parser": "^1.0.0",
+    "browserify": "^3.31.2"
   },
   "devDependencies": {
     "gulp": "3.2.4",

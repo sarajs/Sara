@@ -11,9 +11,12 @@ App.layout('./templates/layout.html')
 
 App.routes({
   '/': function () {
-    return TodoView.render(Todo.all(), '/')
+    return TodoView.render({
+      todos: Todo.all()
+    , completed: Todo.completed().length
+    }, '/')
   }
-, '/new': function (req) {
+, '/completed': function (req) {
     TodoController.create()
     return AboutView.render(null, '/new')
   }
