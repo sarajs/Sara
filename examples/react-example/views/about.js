@@ -1,8 +1,10 @@
 var App = require('sara')
-  , $ = require('jquery')
+  , React = require('react')
 
 var AboutView = module.exports = new App.View('About', {
   render: function () {
-    $('main').html('About my app.')
+    var el = document.querySelector('main')
+    React.unmountComponentAtNode(el)
+    el.innerHTML = 'About my app.'
   }
 })

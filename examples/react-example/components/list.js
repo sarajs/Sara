@@ -5,32 +5,12 @@ var Sara = require('sara')
   , TodoController = require('../controllers/todo')
 
 var ListView = module.exports = React.createClass({
-  _subscribe: function (model) {
-    if (!model) return
-    model.on('add remove reset sort changeAny', this.forceUpdate.bind(this), this)
-  }
-
-, _unsubscribe: function (model) {
-    if (!model) return
-    model.off(null, null, this)
-    model.forEach(function (model) {
-      model.off(null, null, this)
-    }.bind(this))
-  }
-
-, componentDidMount: function () {
-    this._subscribe(this.props.items)
-  }
-
-, componentWillReceiveProps: function (nextProps) {
-    if (this.props.items !== nextProps.model) {
-      this._unsubscribe(this.props.items)
-      this._subscribe(nextProps.items)
-    }
+  componentDidMount: function () {
+    this.props.items.on('add remove reset sort changeAny', this.forceUpdate.bind(this), this)
   }
 
 , componentWillUnmount: function() {
-    this._unsubscribe(this.props.items)
+    this.props.items.off(null, null, this)
   }
 
 , getInitialState: function () {
