@@ -3,7 +3,7 @@
   "version": "0.3.1",
   "main": "./lib/sara.js",
   "dependencies": {
-    "connect": "2.12.0",
+    "connect": "^2.12.0",
     "engine.io": "^0.8.2",
     "engine.io-client": "^0.8.2",
     "jsdom": "^0.10.1",
@@ -14,7 +14,8 @@
     "compression": "^1.0.0",
     "body-parser": "^1.0.0",
     "browserify": "^3.31.2",
-    "contextify": "~0.1.6"
+    "contextify": "^0.1.6",
+    "trumpet": "^1.6.3"
   },
   "devDependencies": {
     "gulp": "3.2.4",
@@ -46,10 +47,16 @@
     "prerender",
     "client"
   ],
-  "author": "Jackson Gariety",
+  "author": {
+    "name": "Jackson Gariety"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/JacksonGariety/Sara/issues"
   },
-  "homepage": "http://JacksonGariety.github.io/Sara"
+  "homepage": "http://JacksonGariety.github.io/Sara",
+  "readme": "# Sara.js\n\nA JavaScript framework that unites the server and client.\n\n## What makes Sara so great?\n\nWell, she's...\n\n+ a single app that runs in servers and browsers (isomorphic)\n+ SEO-friendly (pre-renders your views)\n+ skinny (20kb client-side)\n+ a node framework at heart (`npm install sara --save`)\n\n## Example\n\nHow about a todo list app with...\n\n+ AngularJS views\n+ Data persistence\n+ RethinkDB storage\n+ SEO pre-rendering\n+ WebSocket synchronization\n\nSee [the sara-angular example](https://github.com/JacksonGariety/Sara/tree/master/examples/sara-angular-example).\n\n## Antipatterns\n\nDue to the originality of Sara's client/server realtionship, there are a few \"gotchas\" when building apps with her.\n\n1. NEVER include inline nor external scripts in your templates. All logic should be `require()`'d from within your Sara app.\n\n## Development\n\nTo start the example app from a clone of this repo:\n\n1. `$ npm install` to install Sara's dependencies\n2. `cd examples/sara-angular-example; npm install;` to install the example's dependencies\n3. ` cd ../..; gulp;` to serve the example app\n\n## Testing\n\nLint/test your code by running...\n\n    $ gulp\n\n...from inside of the repo.\n",
+  "readmeFilename": "README.md",
+  "_id": "sara@0.3.1",
+  "_from": "sara@"
 }
