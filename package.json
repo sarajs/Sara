@@ -1,6 +1,6 @@
 {
   "name": "sara",
-  "version": "0.4.8",
+  "version": "0.4.9",
   "main": "./lib/sara.js",
   "dependencies": {
     "connect": "^2.12.0",
