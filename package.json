@@ -17,7 +17,9 @@
     "trumpet": "^1.6.3",
     "mime": "^1.2.11",
     "through": "^2.3.4",
-    "path-to-regexp": "^0.1.2"
+    "path-to-regexp": "^0.1.2",
+    "request": "^2.34.0",
+    "browser-request": "^0.3.1"
   },
   "devDependencies": {
     "gulp": "3.2.4",
