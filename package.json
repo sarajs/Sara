@@ -1,6 +1,6 @@
 {
   "name": "sara",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "main": "./lib/sara.js",
   "dependencies": {
     "connect": "^2.12.0",
@@ -14,14 +14,13 @@
     "browserify": "^3.31.2",
     "through": "^2.3.4",
     "path-to-regexp": "^0.1.2",
-    "event-stream": "^3.1.2",
     "pg": "^3.0.3",
     "pg-query-stream": "^0.4.2",
     "concat-stream": "^1.4.5",
     "sara-request": "^0.0.1",
     "mime": "^1.2.11",
     "fresh": "^0.2.2",
-    "connect-gzip": "^0.1.6"
+    "compression": "^1.0.2"
   },
   "devDependencies": {
     "gulp": "3.2.4",
